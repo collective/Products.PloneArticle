@@ -119,7 +119,7 @@ Proxy.saveForm = function(closeEditWindow) {
    jQuery('.pField', this.container).unbind('blur');
    jQuery('#kss-spinner').show();
    var fieldset = jQuery(this.container).parents('div')[0];
-   var fieldsetData = jQuery('input:not([@type=submit]), textarea', fieldset).serialize();
+   var fieldsetData = jQuery('input:not([type=submit]), textarea', fieldset).serialize();
    formData = fieldsetData + '&form.submitted=1&fieldset=' + this.field_name;
    jQuery.ajax({
        type: 'POST',
@@ -202,12 +202,12 @@ Proxy.toggleFullDisplay = function(widget_id) {
 	var widget = jQuery('#' + widget_id);
 	widget.toggleClass('closedContent');
 	if (widget.hasClass('closedContent')) {
-	jQuery('input[@type=text]', widget[0]).each(function() {
+	jQuery('input[type=text]', widget[0]).each(function() {
 		jQuery(this).hide();
     jQuery(this).after('<span>' + this.value + '</span>');
 	});
 } else {
-	jQuery('input[@type=text]', widget[0]).each(function() {
+	jQuery('input[type=text]', widget[0]).each(function() {
 		jQuery(this).show();
     jQuery(this).next('span').remove();
 	});
@@ -403,7 +403,7 @@ jQuery(document).ready(ProxiesInlineEdit);
 
 
 Proxy_init = function() {
-  jQuery('.innerContentWidget.closedContent input[@type=text]', Proxy.container).each(function() {
+  jQuery('.innerContentWidget.closedContent input[type=text]', Proxy.container).each(function() {
 		jQuery(this).hide().after('<span>' + this.value + '</span>');
 	});
 	Proxy.refresh();

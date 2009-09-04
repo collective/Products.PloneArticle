@@ -8,6 +8,13 @@ SVN Unreleased
 * Fix pa_browser url : url is no more depending on base href
   [macadames] 2009-06-05
 
+* Fix ajax images player launched to soon sometimes
+  $document.ready replaced by $window.load
+  [macadames] 2009-09-04  
+  
+* Fix jQuery syntax (tag[@attribute=value] replaced by tag[attribute=value])
+  (perhaps a new version of jquery.js used in Plone 3.3 ?)  
+  [macadames] 2009-09-04  
 
 4.1.4
 #####
