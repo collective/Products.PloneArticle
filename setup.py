@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '4.1.4'
+version = '4.1.5'
 
 setup(name='Products.PloneArticle',
       version=version,

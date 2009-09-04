@@ -5,6 +5,11 @@ PloneArticle Changes
 SVN Unreleased
 ##############
 
+*
+
+4.1.5
+#####
+
 * Fix pa_browser url : url is no more depending on base href
   [macadames] 2009-06-05
 
