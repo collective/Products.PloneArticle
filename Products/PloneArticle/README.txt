@@ -142,7 +142,7 @@ Credits
 SVN repository
 ##############
 
-https://ingeniweb.svn.sourceforge.net/svnroot/ingeniweb/Products.PloneArticle
+https://svn.plone.org/svn/collective/Products.PloneArticle
 
 Download
 ########
