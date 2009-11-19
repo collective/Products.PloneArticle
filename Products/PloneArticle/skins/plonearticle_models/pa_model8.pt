@@ -20,7 +20,7 @@
 
 
             <fieldset style="clear: left; float:left; margin: 0 15px 0 0 !important; width:200px;"
-                      tal:define="proxies here/getFiles"
+                      tal:define="proxies python:here.getFiles(filtered=True)"
                       tal:condition="proxies">
               <legend i18n:translate="legend_files">Files</legend>
               <tal:block tal:repeat="proxy proxies">

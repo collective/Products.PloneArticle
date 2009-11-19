@@ -20,7 +20,7 @@
           <metal:block use-macro="base_macros/body" />
           <div class="visualClear"><!-- --></div>
           <div class="imagesCenterBlock1"
-               tal:define="proxies here/getImages;"
+               tal:define="proxies python:here.getImages(filtered=True);"
                tal:condition="proxies">
             <div style="float:left"
                  tal:repeat="proxy proxies">

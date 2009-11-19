@@ -2,6 +2,15 @@
 PloneArticle Changes
 ####################
 
+4.1.7
+#####
+
+* Show only attachments and images available to the user such an
+  anonymous user is not rejected when viewing a public article that
+  references a private file.
+  http://plone.org/products/plonearticle/issues/34
+  [glenfant]
+
 4.1.6
 #####
 

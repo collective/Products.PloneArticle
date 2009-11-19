@@ -132,7 +132,7 @@
 
     <metal:block define-macro="images">
       <div class="photosContainer rightBlock"
-           tal:define="proxies here/getImages;
+           tal:define="proxies python:here.getImages(filtered=True);
                        fieldName string:images"
            tal:condition="python: proxies"
            class="photosContainer rightBlock">
@@ -146,7 +146,7 @@
 
     <metal:block define-macro="images_icons">
       <fieldset class="leftPlaced"
-                tal:define="proxies here/getImages;
+                tal:define="proxies python:here.getImages(filtered=True);
                             fieldName string:images"
                 class="leftPlaced"
                 tal:condition="proxies">
@@ -158,7 +158,7 @@
     </metal:block>
 
     <metal:block define-macro="files">
-      <fieldset tal:define="proxies here/getFiles;
+      <fieldset tal:define="proxies python:here.getFiles(filtered=True);
                             fieldName string:files"
                 class="leftPlaced"
                 tal:condition="proxies">

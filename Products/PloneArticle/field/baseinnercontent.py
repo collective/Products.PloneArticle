@@ -28,7 +28,7 @@ from itertools import izip, count
 
 # Zope imports
 from Acquisition import aq_base
-from AccessControl import ClassSecurityInfo
+from AccessControl import ClassSecurityInfo, getSecurityManager
 from ZODB.POSException import ReadConflictError
 from zope.interface import implements
 
@@ -67,6 +67,10 @@ class BaseInnerContentField(Field):
 
     security.declarePrivate('get')
     def get(self, instance, **kwargs):
+        """Classical Field API. Specific keyword args (kwargs):
+        * mimetype: If "text/plain", returns the indexable text"
+        * filtered: if True, provides only the objects the user can view
+        """
         # If mimetype is text/plain returns indexable value
         mimetype = kwargs.get("mimetype", None)
 
@@ -83,7 +87,12 @@ class BaseInnerContentField(Field):
             return ()
 
         if isinstance(container, InnerContentContainer):
-            return container.objectValues()
+            filtered = kwargs.get('filtered', False)
+            proxies = container.objectValues()
+            if filtered:
+                sm = getSecurityManager()
+                proxies = [p for p in proxies if sm.checkPermission('View', p.getReferencedContent())]
+            return proxies
         return ()
 
     # LinguaPlone needs this, as it thinks it always deals with ObjectField...
