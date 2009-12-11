@@ -2,6 +2,13 @@
 PloneArticle Changes
 ####################
 
+4.1.8
+#####
+
+* Fixed too restrictive security issue : anonymous users couldn't see embedded
+  images/files. See issue #35
+  [glenfant]
+
 4.1.7
 #####
 
@@ -29,11 +36,11 @@ PloneArticle Changes
 
 * Fix ajax images player launched to soon sometimes
   $document.ready replaced by $window.load
-  [macadames] 2009-09-04  
-  
+  [macadames] 2009-09-04
+
 * Fix jQuery syntax (tag[@attribute=value] replaced by tag[attribute=value])
-  (perhaps a new version of jquery.js used in Plone 3.3 ?)  
-  [macadames] 2009-09-04  
+  (perhaps a new version of jquery.js used in Plone 3.3 ?)
+  [macadames] 2009-09-04
 
 4.1.4
 #####
@@ -54,10 +61,10 @@ PloneArticle Changes
 
 * Added russian translation, thanks to Roman Susi.
   [glenfant] 2009-01-30
-  
+
 * Activate collapsible sections after reloading model view in ajax
   [macadames] 2009-02-04
-     
+
 Take care : 4.1.1 egg was containing an old file : kssregistry.xml
 A bug with collective.releaser ?
 
@@ -68,85 +75,85 @@ A bug with collective.releaser ?
   replaced by jQuery methods
   This resolve getSiteManager error with iw.fss in kss server views (strange bug)
   [macadames] 2009-01-22
-  
-* When editing proxies fields and closing ajax window very fast, the page was 
+
+* When editing proxies fields and closing ajax window very fast, the page was
   not fresh because processForm was not finished.
-  To close edit window  just call Proxy.SaveForm(closEditWindow=true)  
+  To close edit window  just call Proxy.SaveForm(closEditWindow=true)
   [macadames] 2009-01-24
-  
+
 * css corrections and improvements for models
-  [macadames] 2009-01-24  
-  
+  [macadames] 2009-01-24
+
 * css improvements + small jq effects on light boxes added
-  [macadames] 2009-01-24    
-  
+  [macadames] 2009-01-24
+
 * relaunch Lightboxes after ajax replace Model View (small bug fix)
-  [macadames] 2009-01-24    
-  
+  [macadames] 2009-01-24
+
 * some css IE fixes :
   kss-spinner is invisible under IE6
   some minor MSIE layout bugfixes (browser, kss-menu hover, proxies edit layout ...)
   [macadames] 2009-01-24
-  
-* move all proxies inline edit javascript from pa_model.js 
+
+* move all proxies inline edit javascript from pa_model.js
   to pa_baseinnercontentwidget.js
   [macadames] 2009-01-24
-  
+
 * fix bug in browser with meta_type and Folder
-  in Plone3.1 folder.portal_type != folder.meta_type  
+  in Plone3.1 folder.portal_type != folder.meta_type
   [macadames] 2009-01-24
-  
+
 * Added getLinkIcon method in links proxies
-  used in models macros et editwidget macros  
+  used in models macros et editwidget macros
   [macadames] 2009-01-24
-  
+
 * Fix javascript error in edit proxies widget (javascript)
-  Bad tag insertion (the title was not hidden when clicking on toggleFullDisplay)  
+  Bad tag insertion (the title was not hidden when clicking on toggleFullDisplay)
   [macadames] 2009-01-24
-  
+
 * css class "image" was used in two css
   some styles were transformed
   class "image" replaced by "proxy_image" in proxies edit widgets
   [macadames] 2009-01-24
-  
-* many css bugfixes in edit proxies widget 
+
+* many css bugfixes in edit proxies widget
   hmm ... these terrible templates and css must be entirely refactored
   [macadames] 2009-01-24
-  
+
 * pa_player buf fix :
   when clicking on a image_thumb  buttons were not refreshed
   [macadames] 2009-01-25
-    
-  
+
+
 
 4.1.0-final
 ###########
 
-* Kss menus are always shown under Plone3.0 
+* Kss menus are always shown under Plone3.0
   (when iline_edit_enable property is not available in site_propertis)
   [macadames] 2008-11-05
-  
-* Added migration upgradePath for RC2  
+
+* Added migration upgradePath for RC2
   [macadames] 2008-11-05
 
 4.1.0 RC2
 #########
 
-* Fix error in setuphandlers.py (setupKupu) and Extensions/Install.py (uninstall method) : 
+* Fix error in setuphandlers.py (setupKupu) and Extensions/Install.py (uninstall method) :
   Sometimes inexistant portal_types are stored as resources in kuputool
   [macadames] 2008-10-23
-  
+
 * Change kss inline edit behavior for images/links/files :
   Kss menus are no more contextual, and always displayed at article's top
-  [macadames] 2008-10-24  
-  
+  [macadames] 2008-10-24
+
 * Kss menus are not shown when inline_editing is disabled
   [macadames] 2008-10-25
 
 4.1.0 RC1
 #########
 
-* Make tests running without errors also under MSWindows. 
+* Make tests running without errors also under MSWindows.
   Text from Attached files seems to be indexed in lowercase under Windows, so we test only indexation in lowercase.
   [macadames] 2008-09-05
 

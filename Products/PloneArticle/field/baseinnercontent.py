@@ -88,11 +88,21 @@ class BaseInnerContentField(Field):
 
         if isinstance(container, InnerContentContainer):
             filtered = kwargs.get('filtered', False)
-            proxies = container.objectValues()
+            subitems = container.objectValues()
             if filtered:
+                out = []
                 sm = getSecurityManager()
-                proxies = [p for p in proxies if sm.checkPermission('View', p.getReferencedContent())]
-            return proxies
+                for item in subitems:
+                    referenced = item.getReferencedContent()
+                    if referenced is not None:
+                        # External item
+                        if sm.checkPermission('View', referenced):
+                            out.append(item)
+                    else:
+                        # Embedded item
+                        out.append(item)
+                return out
+            return subitems
         return ()
 
     # LinguaPlone needs this, as it thinks it always deals with ObjectField...
