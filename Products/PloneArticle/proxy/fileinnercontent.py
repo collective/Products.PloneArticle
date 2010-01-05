@@ -39,6 +39,7 @@ from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
 
 from Products.ATContentTypes.interface import IFileContent
+from Products.ATContentTypes.content.file import ATFile
 from Products.PloneArticle.proxy import BaseFileContentProxy, \
      BaseInnerContentProxySchema
 from Products.PloneArticle.interfaces import IFileInnerContentProxy
@@ -52,7 +53,9 @@ try:
 except:
     from Products.Archetypes.public import FileField as ProxyFileField
     from Products.Archetypes.public import FileWidget as ProxyFileWidget
-    
+
+INLINE_MIME_TYPES = ATFile.inlineMimetypes
+
 # Defines schema
 FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
     ComputedField(
@@ -74,7 +77,7 @@ FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
             label_msgid='label_referenced_file',
             i18n_domain='plonearticle',
             ),
-        ),    
+        ),
     ProxyFileField(
         'attachedFile',
         attached_content=True,
@@ -88,28 +91,28 @@ FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
     ))
 
 class FileInnerContentProxy(BaseFileContentProxy):
-    """Proxy implementing IFileContent. It means this proxy has a getFile 
+    """Proxy implementing IFileContent. It means this proxy has a getFile
     method.
-    
+
     getFile returns attached file by default if existing otherwise returns
     the referenced content.
     """
-    
-    implements(IFileInnerContentProxy)    
+
+    implements(IFileInnerContentProxy)
     security = ClassSecurityInfo()
 
     schema = FileInnerContentProxySchema
 
     # You can only reference content implementing IFileContent interface
     referenceable_interfaces = (IFileContent,)
-    
+
     security.declareProtected(CCP.View, 'index_html')
     def index_html(self, REQUEST=None, RESPONSE=None):
         """Make it directly viewable when entering the objects URL.
-        
+
         We have to reproduce it to keep the same behaviour as usual for files.
         """
-        
+
         if REQUEST is None:
             REQUEST = self.REQUEST
         if RESPONSE is None:
@@ -117,18 +120,23 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field = self.getPrimaryField()
         accessor = field.getAccessor(self)
         data = accessor()
-        
+
         if not isinstance(data, File):
             return ''
-        
-        if data.getContentType().startswith('text/'): 
+
+        mime_type =  data.getContentType()
+        if mime_type.startswith('text/'):
             return data
 
+        if mime_type in INLINE_MIME_TYPES:
+            content_dispo = 'inline'
+        else:
+            content_dispo = 'attachment'
         RESPONSE.setHeader(
             'Content-Disposition',
-            'attachment; filename="%s"' % data.filename or self.getId())
+            '%s; filename="%s"' % (content_dispo, data.filename or self.getId()))
         return data.index_html(REQUEST, RESPONSE)
-    
+
     def setAttachedFile(self, value, **kwargs):
         """
         Rename proxy according to file name
@@ -136,5 +144,5 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field = self.getField('attachedFile')
         field.set(self, value, **kwargs)
         self.renameFromFileName(field)
-    
+
 registerType(FileInnerContentProxy)

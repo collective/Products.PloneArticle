@@ -2,6 +2,12 @@
 PloneArticle Changes
 ####################
 
+4.1.9
+#####
+
+* Set "content-disposition" header for files as in ATFile
+  [glenfant]
+
 4.1.8
 #####
 
