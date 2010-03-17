@@ -1,0 +1,119 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.1\n"
+"POT-Creation-Date: 2009-10-13 15:00+0000\n"
+"PO-Revision-Date: 2009-09-20 13:24+0100\n"
+"Last-Translator: Rob Gietema <rob@fourdigits.nl>\n"
+"Language-Team: Rob Gietema <rob@fourdigits.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: nl\n"
+"Language-Name: Dutch\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plone\n"
+
+#. Default: "File Content Inner Proxy"
+#: portal type title of type with description Proxy implementing IFileContent. It means this proxy has a getFile     method.        getFile returns attached file by default if existing otherwise returns    the referenced content.
+msgid "File Content Inner Proxy"
+msgstr ""
+
+msgid "Files"
+msgstr ""
+
+#. Default: "Image Content Inner Proxy"
+#: portal type title of type with description Proxy implementing IImageContent. It means this proxy has a getImage     method.        getImage returns attached image by default if existing otherwise returns    the referenced content.
+msgid "Image Content Inner Proxy"
+msgstr ""
+
+msgid "Images"
+msgstr ""
+
+#. Default: "Inner Content Container"
+#: portal type title of type with description This folder is a container of inner content objects
+msgid "Inner Content Container"
+msgstr ""
+
+#. Default: "Link Content Inner Proxy"
+#: portal type title of type with description Proxy implementing IATLink. It means this proxy has a remoteUrl    method.        remoteUrl returns attached link by default if existing otherwise returns    the referenced content.
+msgid "Link Content Inner Proxy"
+msgstr ""
+
+msgid "Links"
+msgstr ""
+
+#. Default: "Lock (Currently not locked)"
+#: action_icon id lock.gif - category plone
+#: type action defined on File
+msgid "Lock (Currently not locked)"
+msgstr ""
+
+#. Default: "Multipage article"
+#: portal type title of type with description
+msgid "Multipage article"
+msgstr ""
+
+#. Default: "Plone Article Tool"
+#: portal type title of type with description Tool for PloneArticle
+msgid "Plone Article Tool"
+msgstr ""
+
+msgid "PloneArticle preferences"
+msgstr ""
+
+#. Default: "Proxy implementing IATLink. It means this proxy has a remoteUrl    method.        remoteUrl returns attached link by default if existing otherwise returns    the referenced content."
+#: portal type description of type with title Link Content Inner Proxy
+msgid "Proxy implementing IATLink. It means this proxy has a remoteUrl    method.        remoteUrl returns attached link by default if existing otherwise returns    the referenced content."
+msgstr ""
+
+#. Default: "Proxy implementing IFileContent. It means this proxy has a getFile     method.        getFile returns attached file by default if existing otherwise returns    the referenced content."
+#: portal type description of type with title File Content Inner Proxy
+msgid "Proxy implementing IFileContent. It means this proxy has a getFile     method.        getFile returns attached file by default if existing otherwise returns    the referenced content."
+msgstr ""
+
+#. Default: "Proxy implementing IImageContent. It means this proxy has a getImage     method.        getImage returns attached image by default if existing otherwise returns    the referenced content."
+#: portal type description of type with title Image Content Inner Proxy
+msgid "Proxy implementing IImageContent. It means this proxy has a getImage     method.        getImage returns attached image by default if existing otherwise returns    the referenced content."
+msgstr ""
+
+msgid "Templates"
+msgstr ""
+
+#. Default: "This folder is a container of inner content objects"
+#: portal type description of type with title Inner Content Container
+msgid "This folder is a container of inner content objects"
+msgstr ""
+
+#. Default: "Tool for PloneArticle"
+#: portal type description of type with title Plone Article Tool
+msgid "Tool for PloneArticle"
+msgstr ""
+
+#. Default: "Unlock (Currently locked)"
+#: action_icon id unlock.gif - category plone
+#: type action defined on File
+msgid "Unlock (Currently locked)"
+msgstr ""
+
+msgid "default"
+msgstr ""
+
+msgid "description_edit_multipage"
+msgstr ""
+
+msgid "description_edit_plonearticle"
+msgstr ""
+
+msgid "files"
+msgstr ""
+
+msgid "images"
+msgstr ""
+
+msgid "links"
+msgstr ""
+
+msgid "models"
+msgstr ""
+
