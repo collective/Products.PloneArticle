@@ -120,9 +120,9 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field = self.getPrimaryField()
         accessor = field.getAccessor(self)
         data = accessor()
-
-        if not isinstance(data, File):
-            return ''
+        
+        #if not isinstance(data, File):
+        #    return ''
 
         mime_type =  data.getContentType()
         if mime_type.startswith('text/'):

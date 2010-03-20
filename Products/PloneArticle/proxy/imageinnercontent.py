@@ -114,8 +114,8 @@ class ImageInnerContentProxy(BaseFileContentProxy):
         accessor = field.getAccessor(self)
         data = accessor()
         
-        if not isinstance(data, Image):
-            return ''
+        #if not isinstance(data, Image):
+        #    return ''
         
         return data.index_html(REQUEST, RESPONSE)
     

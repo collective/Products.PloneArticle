@@ -2,6 +2,13 @@
 PloneArticle Changes
 ####################
 
+4.1.10 (svn)
+############
+
+* Commented out isinstance checks in fileinnercontentproxy and
+  imageinnercontentproxy. they break functionality when plone.app.blob is used.
+  [rnix]
+
 4.1.9
 #####
 
