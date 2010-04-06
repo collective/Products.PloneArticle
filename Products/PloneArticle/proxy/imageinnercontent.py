@@ -44,7 +44,7 @@ from Products.PloneArticle import LOG
 from Products.PloneArticle.proxy import BaseFileContentProxy, \
     BaseInnerContentProxySchema
 from Products.PloneArticle.interfaces import IImageInnerContentProxy, IBaseInnerContentProxy
-from Products.PloneArticle.config import PLONEARTICLE_TOOL
+from Products.PloneArticle.config import PLONEARTICLE_TOOL, PROJECTNAME
 
 
 # Defines schema
@@ -136,4 +136,4 @@ class ImageInnerContentProxy(BaseFileContentProxy):
         field.set(self, value, **kwargs)
         self.renameFromFileName(field)
 
-registerType(ImageInnerContentProxy)
+registerType(ImageInnerContentProxy, PROJECTNAME)

@@ -14,7 +14,8 @@
                              multipage parent_folder/@@multipage_view;
                              is_multipage multipage/isMultipage;
                              kssClassesView context/@@kss_field_decorator_view;
-                             getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;">
+                             getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+														 portal context/@@plone_portal_state/portal">
 
       <tal:block define="global mimetypes  nocall:portal/mimetypes_registry;" />
 

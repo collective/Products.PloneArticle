@@ -44,6 +44,8 @@ from Products.PloneArticle.proxy import BaseFileContentProxy, \
      BaseInnerContentProxySchema
 from Products.PloneArticle.interfaces import IFileInnerContentProxy
 
+from Products.PloneArticle.config import PROJECTNAME
+
 # Use AttachmentField product if found otherwise use standard FileField
 try:
     from Products.AttachmentField.AttachmentField import AttachmentField \
@@ -145,4 +147,4 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field.set(self, value, **kwargs)
         self.renameFromFileName(field)
 
-registerType(FileInnerContentProxy)
+registerType(FileInnerContentProxy, PROJECTNAME)

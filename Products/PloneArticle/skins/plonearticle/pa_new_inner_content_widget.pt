@@ -1,5 +1,5 @@
 <metal:block use-macro="here/global_defines/macros/defines" />
-<metal:block tal:define="lang language;
+<metal:block tal:define="lang context/@@plone_portal_state/language;
                          charset site_properties/default_charset|string:utf-8;
                          dummy python:request.RESPONSE.setHeader('Content-Type', 'text/html;;charset=%s' % charset);
                          dummy python:request.RESPONSE.setHeader('Content-Language', lang);

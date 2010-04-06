@@ -41,6 +41,7 @@ from Products.ATContentTypes.interface import IATLink, IATContentType
 from Products.PloneArticle.proxy import BaseInnerContentProxy, \
     BaseInnerContentProxySchema
 from Products.PloneArticle.interfaces import ILinkInnerContentProxy
+from Products.PloneArticle.config import PROJECTNAME
 
 # Defines schema
 LinkInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
@@ -128,4 +129,4 @@ class LinkInnerContentProxy(BaseInnerContentProxy):
 
 
 
-registerType(LinkInnerContentProxy)
+registerType(LinkInnerContentProxy, PROJECTNAME)

@@ -39,6 +39,8 @@ from Products.Archetypes.interfaces import IOrderedContainer
 from Products.PloneArticle.interfaces import IInnerContentContainer, IBaseInnerContent
 from Products.PloneArticle.pafti import DynamicAllowedContentFTI
 
+from Products.PloneArticle.config import PROJECTNAME
+
 class InnerContentContainer(OrderedContainer, BaseFolderMixin):
     """This folder is a container of inner content objects"""
 
@@ -102,4 +104,4 @@ class InnerContentContainer(OrderedContainer, BaseFolderMixin):
         return ids
 
 
-registerType(InnerContentContainer)
+registerType(InnerContentContainer, PROJECTNAME)

@@ -42,6 +42,7 @@ from Products.ATContentTypes.content.folder import ATFolder
 
 from Products.PloneArticle.interfaces import IPloneArticleMultiPage
 
+from Products.PloneArticle.config import PROJECTNAME
 
 schema = ATFolder.schema.copy() \
          + Schema((
@@ -144,4 +145,4 @@ class PloneArticleMultiPage(ATFolder):
             return request.RESPONSE.redirect(pages[0].getObject().absolute_url())
 
 
-registerType(PloneArticleMultiPage)
+registerType(PloneArticleMultiPage, PROJECTNAME)

@@ -36,7 +36,7 @@ from Products.CMFCore.utils import ContentInit, ToolInit
 from Products.Archetypes.public import process_types, listTypes
 
 # Products imports
-from Products.PloneArticle import config
+import config
 from Products.PloneArticle.pafti import PloneArticleFactoryTypeInformation
 from Products.PloneArticle.pafti import manage_addPAFTIForm
 from Products.PloneArticle.pafti import DynamicAllowedContentFTI
