@@ -65,19 +65,19 @@
       </tal:h1>
 
       <div tal:replace="structure provider:plone.belowcontenttitle" />
-      
+
       <input type="hidden"
              name="absolute_url"
              id ="absolute_url"
              tal:attributes="value here/absolute_url" />
-             
+
       <input type="hidden"
              name="portal_url"
              id ="portal_url"
-             tal:attributes="value portal_url" />             
-      
+             tal:attributes="value portal_url" />
+
       <metal:block use-macro="here/pa_model_macros/macros/kss-menu" />
-      
+
     </metal:block>
 
     <metal:block define-macro="description"
@@ -105,13 +105,13 @@
 
 
     </metal:block>
-    
-    <metal:block define-macro="kss-menu">  
+
+    <metal:block define-macro="kss-menu">
           <ul tal:condition="python:checkPermission('Modify portal content', here)"
               id="kss-menu">
             <tal:block repeat="fieldName python:['images', 'files', 'links']">
                 <li tal:attributes="id string:parent-fieldname-$fieldName"
-                    class="jqInlineEditable">            
+                    class="jqInlineEditable">
                     <a class="kss-menu-text"
                        href="#"
                        tal:content="python:here.utranslate('label_manage_%s' % fieldName, default='Manage %s' % fieldName, domain='plonearticle')">
@@ -119,12 +119,12 @@
                     </a>
                     <input type="hidden"
                            class="jq-fieldname"
-                           tal:attributes="value fieldName" />     
+                           tal:attributes="value fieldName" />
                     <input type="hidden"
                            class="jq-edit-template"
-                           tal:attributes="value python:'pa_%sinnercontentwidget' %fieldName.rstrip('s')" />                      
-                </li>              
-            </tal:block>    
+                           tal:attributes="value python:'pa_%sinnercontentwidget' %fieldName.rstrip('s')" />
+                </li>
+            </tal:block>
           </ul>
           <div class="visualClear">
             <!-- clear left block only -->
@@ -237,9 +237,9 @@
             <span class="discreet"
                   tal:content="file_description">Description</span>
           </div>
- 
+
         </div>
-      </tal:block>  
+      </tal:block>
     </metal:block>
 
     <metal:block define-macro="link">
@@ -253,11 +253,11 @@
                            title link_description"
            class="link-plain">
           <img tal:attributes="src link_icon;
-                               alt link_description" />    
+                               alt link_description" />
         </a>
         <a tal:attributes="href url;
                            title link_description"
-           class="link-plain">                      
+           class="link-plain">
           <span tal:content="title" />
         </a>
         <div class="proxy-description"
@@ -313,7 +313,7 @@
              tal:condition="image_description">
           <span class="discreet"
                 tal:content="image_description">Description</span>
-        </div>        
+        </div>
       </div>
     </metal:block>
 
