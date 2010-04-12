@@ -125,7 +125,7 @@ Proxy.saveForm = function(closeEditWindow) {
        type: 'POST',
        url: Article.url + '/processForm',
        data: formData,
-       complete: function() { 
+       complete: function() {
            if (closeEditWindow) Proxy.replaceModelView();
            else {
                Proxy.saveonblur();
@@ -211,7 +211,7 @@ Proxy.toggleFullDisplay = function(widget_id) {
 		jQuery(this).show();
     jQuery(this).next('span').remove();
 	});
-}  
+}
 
 };
 
@@ -249,7 +249,7 @@ Browser_init = function() {
       Browser.batch();
     });
   }
-	
+
 	Browser.maximize = function() {
 		Browser.maximized = true;
 		var size = {};
@@ -264,7 +264,7 @@ Browser_init = function() {
 		Browser.size(size);
 		window.scroll(0,size.top-30);
 	};
-	
+
 	Browser.selectItem = function (UID) {
 	    aUrl = Article.url + '/' + Browser.reference_script;
 	    jQuery('.statusBar > div', Browser.window).hide().filter('#msg-loading').show();
@@ -278,7 +278,7 @@ Browser_init = function() {
 	         	   jQuery('.statusBar > div', Browser.window).hide().filter('#msg-done').show();
                });
 	};
-	
+
     Browser.open = function(path, searchTerm, scope, replaceId, replacePath) {
         var aUrl = Article.url + '/pa_browser';
   	    var data = {
@@ -312,7 +312,7 @@ Browser_init = function() {
             Browser.batch();
         });
     };
-    
+
     Browser.maximized = true;
 };
 
@@ -345,7 +345,7 @@ Proxy.enablesaveonclick =  function() {
             Proxy.saveForm(true);
             return false;
             });
-    }    
+    }
 }
 
 Proxy.replaceModelView = function() {
@@ -354,7 +354,7 @@ Proxy.replaceModelView = function() {
     formData = {
                pamacro:  encodeURI(pamacro)
                };
-    aUrl = Article.url + '/pa_macro_wrapper';    
+    aUrl = Article.url + '/pa_macro_wrapper';
     jQuery('#kss-spinner').show();
     jQuery.post(aUrl, formData, function(html) {
   		    jQuery('#pacontent').html(html);
@@ -364,7 +364,7 @@ Proxy.replaceModelView = function() {
   		    jQuery(document).ready(TB_launch);
   		    jQuery(document).ready(activateCollapsibles);
           }
-          );               
+          );
 }
 
 
@@ -376,7 +376,7 @@ loadEditMacro = function(paedittemplate, fieldName) {
                paedittemplate:  paedittemplate,
                fieldName : fieldName
                };
-    aUrl =  context.absolute_url() + '/pa_editfield_wrapper';          
+    aUrl =  context.absolute_url() + '/pa_editfield_wrapper';
     jQuery.post(aUrl, formData, function(html) {
   		    jQuery('#kss-menu').html(html);
   		    jQuery(document).ready(function(){
@@ -385,7 +385,7 @@ loadEditMacro = function(paedittemplate, fieldName) {
                      Field_init(node);
            } );
           }
-          );	        
+          );
 }
 
 
@@ -452,9 +452,9 @@ Field_init = function(node) {
 			if (jQuery(this).attr('id')!= 'parent-fieldname-' + Proxy.field_name) {
          jQuery(this).hide();
       }
-		});		
+		});
 	// hide iplayer
-  // if (Proxy.field_name=='images') jQuery('#imagesPlayer').hide(); 
+  // if (Proxy.field_name=='images') jQuery('#imagesPlayer').hide();
 }
 
 
@@ -467,7 +467,7 @@ InitPloneArticleFormTabs = function () {
     jQuery('.pFieldname').each(
         function() {
             var fieldName = jQuery(this).val();
-            jQuery('#fieldsetlegend-' + fieldName).click(function() {Tabs_init(fieldName);return false;});            
+            jQuery('#fieldsetlegend-' + fieldName).click(function() {Tabs_init(fieldName);return false;});
         }
     );
 }
@@ -579,10 +579,10 @@ buildTabs31X = function(container, legends) {
         tabs.appendChild(tab);
         jq(this).remove();
     });
-    
+
     jq(tabs).children(':first').addClass('firstFormTab');
     jq(tabs).children(':last').addClass('lastFormTab');
-    
+
     return tabs;
 };
 
@@ -601,6 +601,6 @@ else {
     // this does not work with kupu+MSIE under plone3.0.x
     //jQuery(document).ready(InitPloneArticleFormTabs);
     registerPloneFunction(InitPloneArticleFormTabs);
-}    
+}
 
-   
+
