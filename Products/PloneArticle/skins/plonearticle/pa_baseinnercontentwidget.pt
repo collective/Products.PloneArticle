@@ -108,7 +108,7 @@
                   </li>
                   <li id="plone-article-browser-menu">
                     <a href="" id="plone-article-browse-link"
-                       tal:attributes="href string:${here_url}/${template_id}?fieldset=${fieldset};
+                       tal:attributes="href string:${here/absolute_url}/${template/id}?fieldset=${fieldset};
                                        onclick string:Browser.open(Browser.url, '','','','');; return false;">
                       <span
                           tal:replace="python:here.utranslate('label_browse_server_%s' % fieldName, default='Browse server %s' % fieldName, domain='plonearticle')">
