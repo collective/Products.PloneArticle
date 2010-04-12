@@ -472,69 +472,6 @@ InitPloneArticleFormTabs = function () {
     );
 }
 
-
-// temp hack of stupid formTabs threshold for plone 3.0x
-buildTabs30X = function(container, legends) {
-    var threshold = 10;
-    var tab_ids = [];
-    var panel_ids = [];
-
-    for (var i=0; i<legends.length; i++) {
-        tab_ids[i] = legends[i].id;
-        panel_ids[i] = tab_ids[i].replace(/^fieldsetlegend-/, "fieldset-")
-    }
-
-    if (legends.length > threshold) {
-        var tabs = document.createElement("select");
-        tabs.onchange = ploneFormTabbing._toggleFactory(container, tab_ids, panel_ids);
-    } else {
-        var tabs = document.createElement("ul");
-    }
-    tabs.className = "formTabs";
-
-    for (var i=0; i<legends.length; i++) {
-        var legend = legends[i];
-        var parent = legend.parentNode;
-        if (legends.length > threshold) {
-            var tab = document.createElement("option");
-        } else {
-            var tab = document.createElement("li");
-        }
-        switch (i) {
-            case 0: {
-                tab.className = "formTab firstFormTab";
-                break;
-            }
-            case (legends.length-1): {
-                tab.className = "formTab lastFormTab";
-                break;
-            }
-            default: {
-                tab.className = "formTab";
-                break;
-            }
-        }
-        var text = document.createTextNode(getInnerTextFast(legend));
-        if (legends.length > threshold) {
-            tab.appendChild(text);
-            tab.id = legend.id;
-            tab.value = legend.id;
-        } else {
-            var a = document.createElement("a");
-            a.id = legend.id;
-            a.href = "#" + legend.id;
-            a.onclick = ploneFormTabbing._toggleFactory(container, tab_ids, panel_ids);
-            var span = document.createElement("span");
-            span.appendChild(text);
-            a.appendChild(span);
-            tab.appendChild(a);
-        }
-        tabs.appendChild(tab);
-        parent.removeChild(legend);
-    }
-    return tabs;
-};
-
 // temp hack of stupid formTabs threshold for plone 3.1
 buildTabs31X = function(container, legends) {
     var threshold = 10;
@@ -545,10 +482,11 @@ buildTabs31X = function(container, legends) {
         tab_ids[i] = '#' + this.id;
         panel_ids[i] = tab_ids[i].replace(/^#fieldsetlegend-/, "#fieldset-");
     });
-    var handler = ploneFormTabbing._toggleFactory(
-        container, tab_ids.join(','), panel_ids.join(','));
 
     if (legends.length > threshold) {
+        var handler = ploneFormTabbing._toggleFactory(
+            container, tab_ids.join(','), panel_ids.join(','));
+
         var tabs = document.createElement("select");
         var tabtype = 'option';
         jq(tabs).change(handler).addClass('noUnloadProtection');
@@ -588,19 +526,5 @@ buildTabs31X = function(container, legends) {
 
 
 
-
-
-if (typeof jq != "undefined") {
-    // patch plone method ploneFormTabbing._buildTabs
-    ploneFormTabbing._buildTabs = buildTabs31X ;
-    jQuery(document).ready(InitPloneArticleFormTabs);
-}
-else {
-    // patch plone method ploneFormTabbing._buildTabs
-    ploneFormTabbing._buildTabs = buildTabs30X ;
-    // this does not work with kupu+MSIE under plone3.0.x
-    //jQuery(document).ready(InitPloneArticleFormTabs);
-    registerPloneFunction(InitPloneArticleFormTabs);
-}
-
+ploneFormTabbing._buildTabs = buildTabs31X ;
 
