@@ -10,12 +10,13 @@
 
     <metal:block define-macro="header"
                  tal:define="plone_view plone_view|nothing;
-                             parent_folder plone_view/getCurrentFolder | python:test(here.is_folderish(), here, here.aq_inner.getParentNode());
+                             is_folderish here/isPrincipiaFolderish|nothing;
+                             parent_folder plone_view/getCurrentFolder | python:test(is_folderish, here, here.aq_inner.getParentNode());
                              multipage parent_folder/@@multipage_view;
                              is_multipage multipage/isMultipage;
                              kssClassesView context/@@kss_field_decorator_view;
                              getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
-														 portal context/@@plone_portal_state/portal">
+                             portal context/@@plone_portal_state/portal">
 
       <tal:block define="global mimetypes  nocall:portal/mimetypes_registry;" />
 
@@ -74,7 +75,8 @@
       <input type="hidden"
              name="portal_url"
              id ="portal_url"
-             tal:attributes="value portal_url" />
+             tal:define="portal here/portal_url/getPortalObject"
+             tal:attributes="value portal/absolute_url" />
 
       <metal:block use-macro="here/pa_model_macros/macros/kss-menu" />
 
@@ -107,7 +109,7 @@
     </metal:block>
 
     <metal:block define-macro="kss-menu">
-          <ul tal:condition="python:checkPermission('Modify portal content', here)"
+          <ul tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here)"
               id="kss-menu">
             <tal:block repeat="fieldName python:['images', 'files', 'links']">
                 <li tal:attributes="id string:parent-fieldname-$fieldName"
@@ -473,7 +475,8 @@
 
     <metal:block define-macro="footer"
                  tal:define="plone_view plone_view|nothing;
-                             parent_folder plone_view/getCurrentFolder | python:test(here.is_folderish(), here, here.aq_inner.getParentNode());
+                             is_folderish here/isPrincipiaFolderish|nothing;
+                             parent_folder plone_view/getCurrentFolder | python:test(is_folderish, here, here.aq_inner.getParentNode());
                              multipage parent_folder/@@multipage_view;
                              is_multipage multipage/isMultipage;">
 

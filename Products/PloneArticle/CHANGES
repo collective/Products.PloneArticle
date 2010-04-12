@@ -11,8 +11,9 @@ PloneArticle Changes
   imageinnercontentproxy. they break functionality when plone.app.blob is used.
   [rnix]
 
-* Updated page templates and registerType calls for Plone 4 support
-  [vangheem] 
+* Updated registerType calls for Plone 4 support [vangheem]
+
+* Updated page templates for Plone 4 support [vangheem] [tdesvenain]
 
 
 4.1.9
