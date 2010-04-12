@@ -7,7 +7,7 @@
  * Modifications must keep attribution for both Christian Montoya and Cody Lindley.
  */
 
-//jQuery(document).ready(TB_launch); 
+//jQuery(document).ready(TB_launch);
 
 // function for adding Thickbox to elements of class .thickbox
 // wrapped by Christian Montoya for uses other than jQuery(document).ready
@@ -33,13 +33,13 @@ function TB_show(caption, url) { //function called when the user clicks on a thi
 	  // MSIE fix
 	  hideSelectBoxes();
 		var queryString = url.replace(/^[^\?]+\??/,'');
-		var params = parseQuery( queryString );	
+		var params = parseQuery( queryString );
 		var urlString = /.jpg|.jpeg|.png|.gif|.html|.htm/g;
 		var urlType = url.match(urlString);
-		var urlIsImage = (urlType == '.jpg' || urlType == '.jpeg' || urlType == '.png' || urlType == '.gif' || params['isImage']);	  
+		var urlIsImage = (urlType == '.jpg' || urlType == '.jpeg' || urlType == '.png' || urlType == '.gif' || params['isImage']);
 		jQuery("body").append("<div id='TB_overlay'></div>");
 		if (params['field_name']) jQuery("body").append("<div id='TB_window' class='proxyAction'></div>");
-    else jQuery("body").append("<div id='TB_window'></div>");   
+    else jQuery("body").append("<div id='TB_window'></div>");
 		//addon ingeniweb
 		TB_overlay_position();
 		jQuery("#TB_overlay").css("opacity","0.5");
@@ -48,8 +48,8 @@ function TB_show(caption, url) { //function called when the user clicks on a thi
 		jQuery("#TB_overlay").click(TB_remove);
 		jQuery(window).resize(TB_position);
 		jQuery("body").append("<div id='TB_load'><div id='TB_loadContent'><img src='circle_animation.gif' /></div></div>");
-		jQuery("#TB_overlay").show();		
- 
+		jQuery("#TB_overlay").show();
+
 		if (urlIsImage) {//code to show images
 			var imgPreloader = new Image();
 			imgPreloader.onload = function(){
@@ -58,30 +58,30 @@ function TB_show(caption, url) { //function called when the user clicks on a thi
 			var de = document.documentElement;
 			var x = (self.innerWidth || (de&&de.clientWidth) || document.body.clientWidth) - 50;
 			var y = (self.innerHeight || (de&&de.clientHeight) || document.body.clientHeight) - 80;
-			if(imgPreloader.width > x) { 
-				imgPreloader.height = imgPreloader.height * (x/imgPreloader.width); 
-				imgPreloader.width = x; 
-				if(imgPreloader.height > y) { 
-					imgPreloader.width = imgPreloader.width * (y/imgPreloader.height); 
-					imgPreloader.height = y; 
+			if(imgPreloader.width > x) {
+				imgPreloader.height = imgPreloader.height * (x/imgPreloader.width);
+				imgPreloader.width = x;
+				if(imgPreloader.height > y) {
+					imgPreloader.width = imgPreloader.width * (y/imgPreloader.height);
+					imgPreloader.height = y;
 				}
-			} 
-			else if(imgPreloader.height > y) { 
-				imgPreloader.width = imgPreloader.width * (y/imgPreloader.height); 
-				imgPreloader.height = y; 
-				if(imgPreloader.width > x) { 
-					imgPreloader.height = imgPreloader.height * (x/imgPreloader.width); 
+			}
+			else if(imgPreloader.height > y) {
+				imgPreloader.width = imgPreloader.width * (y/imgPreloader.height);
+				imgPreloader.height = y;
+				if(imgPreloader.width > x) {
+					imgPreloader.height = imgPreloader.height * (x/imgPreloader.width);
 					imgPreloader.width = x;
 				}
 			}
 			// End Resizing
-			
+
 			TB_WIDTH = imgPreloader.width;
-			TB_HEIGHT = imgPreloader.height + 20;					
+			TB_HEIGHT = imgPreloader.height + 20;
 
 			jQuery("#TB_window").append("<a href='#' id='TB_closeWindow'><span id='TB_closeWindowButton'>X</span></a>"
                  + "<img id='TB_Image' src='"+url+"' width='"+imgPreloader.width+"' height='"+imgPreloader.height+"' alt='"+caption+"'/>"
-			           + "<div id='TB_caption'>"+caption+"</div>"); 
+			           + "<div id='TB_caption'>"+caption+"</div>");
 			jQuery("#TB_closeWindow").click(TB_remove);
 			jQuery("#TB_Image").click(TB_remove);
 			jQuery("#TB_Image").bind('mouseover', function(){
@@ -89,17 +89,17 @@ function TB_show(caption, url) { //function called when the user clicks on a thi
           });
 			jQuery("#TB_Image").bind('mouseout', function(){
           jQuery('#TB_caption').slideUp('slow');
-          });          
+          });
 			TB_position();
 			jQuery("#TB_load").remove();
 			jQuery("#TB_window").slideDown("normal");
 			}
-	  
+
 			imgPreloader.src = url;
 		}
-		
+
 		if(urlType == '.htm' || urlType == '.html' || !urlIsImage){//code to show html pages
-			
+
 			TB_WIDTH = (params['width']*1) + 30;
 			TB_HEIGHT = (params['height']*1) + 40;
 			ajaxContentW = TB_WIDTH - 30;
@@ -111,11 +111,11 @@ function TB_show(caption, url) { //function called when the user clicks on a thi
                                           			jQuery("#TB_window").slideDown("normal");
                                                 /* addons Ingeniweb
                                                    we can add closeWindow buttons everywhere in ajax content*/
-                                          			jQuery(".TB_closeWindow").click(TB_remove);  
-                                                highlightSearchTermsInPreview();                                   			
+                                          			jQuery(".TB_closeWindow").click(TB_remove);
+                                                highlightSearchTermsInPreview();
                                           			});
 		}
-		
+
 	} catch(e) {
 		alert( e );
 	}
@@ -124,15 +124,15 @@ function TB_show(caption, url) { //function called when the user clicks on a thi
 //helper functions below
 
 function TB_remove() {
-  // addon Ingeniweb 
+  // addon Ingeniweb
   showSelectBoxes();
 	// #TB_load removal added by Christian Montoya; solves bug when overlay is closed before image loads
-	jQuery("#TB_window").fadeOut("fast",function(){jQuery('#TB_window,#TB_overlay,#TB_load').remove();}); 
+	jQuery("#TB_window").fadeOut("fast",function(){jQuery('#TB_window,#TB_overlay,#TB_load').remove();});
 	return false;
 }
 
 
-function TB_overlay_position() {  
+function TB_overlay_position() {
   arrayPageSize = getPageSize();
   jQuery("#TB_overlay").css("height",arrayPageSize[1] +"px");
 }
@@ -180,17 +180,17 @@ function getPageScroll(){
     yScroll = document.body.scrollTop;
 	}
 
-	arrayPageScroll = new Array(xScroll,yScroll) 
+	arrayPageScroll = new Array(xScroll,yScroll)
 	return arrayPageScroll;
 }
 
 
 
 function getPageSize(){
-	
+
 	var xScroll, yScroll;
-	
-	if (window.innerHeight && window.scrollMaxY) {	
+
+	if (window.innerHeight && window.scrollMaxY) {
   	yScroll = window.innerHeight + window.scrollMaxY;
   	xScroll = window.innerWidth + window.scrollMaxX;
   	var deff = document.documentElement;
@@ -205,7 +205,7 @@ function getPageSize(){
 		xScroll = document.body.offsetWidth;
 		yScroll = document.body.offsetHeight;
 	}
-	
+
 	var windowWidth, windowHeight;
 	if (self.innerHeight) {	// all except Explorer
 		windowWidth = self.innerWidth;
@@ -216,24 +216,24 @@ function getPageSize(){
 	} else if (document.body) { // other Explorers
 		windowWidth = document.body.clientWidth;
 		windowHeight = document.body.clientHeight;
-	}	
-	
+	}
+
 	// for small pages with total height less then height of the viewport
 	if(yScroll < windowHeight){
 		pageHeight = windowHeight;
-	} else { 
+	} else {
 		pageHeight = yScroll;
 	}
 
 	// for small pages with total width less then width of the viewport
-	if(xScroll < windowWidth){	
+	if(xScroll < windowWidth){
 		pageWidth = windowWidth;
 	} else {
 		pageWidth = xScroll;
 	}
 
 
-	arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight) 
+	arrayPageSize = new Array(pageWidth,pageHeight,windowWidth,windowHeight)
 	return arrayPageSize;
 }
 
@@ -254,7 +254,7 @@ function hideSelectBoxes(){
 }
 
 // Adon preview PloneArticle
-function highlightSearchTermsInPreview() {        
+function highlightSearchTermsInPreview() {
         // search-term-highlighter function --  Geir Bækholt
         var terms = getSearchTermsFromURI(window.location.search);
         var contentarea = document.getElementById('preview-container');
@@ -262,6 +262,6 @@ function highlightSearchTermsInPreview() {
             highlightSearchTerms(terms, contentarea);
             }
         }
-      
+
 
 //
