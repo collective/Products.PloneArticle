@@ -16,7 +16,8 @@
                              is_multipage multipage/isMultipage;
                              kssClassesView context/@@kss_field_decorator_view;
                              getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
-                             portal context/@@plone_portal_state/portal">
+                             portal context/@@plone_portal_state/portal;
+                             portal_url portal/absolute_url;">
 
       <tal:block define="global mimetypes  nocall:portal/mimetypes_registry;" />
 
@@ -75,8 +76,7 @@
       <input type="hidden"
              name="portal_url"
              id ="portal_url"
-             tal:define="portal here/portal_url/getPortalObject"
-             tal:attributes="value portal/absolute_url" />
+             tal:attributes="value portal_url" />
 
       <metal:block use-macro="here/pa_model_macros/macros/kss-menu" />
 
@@ -206,7 +206,9 @@
                          file_size python:not isAttach and here.getObjSize(proxy, size=proxy.getReferencedContent().get_size()) or file_size;
                          s_t python:(is_search and has_preview and fileField.getIndexableValue(proxy)) or '';
                          has_search python:is_search and has_preview and modules['string'].find(s_t, request.searchterm) >= 0;
-                         klass python:test(has_search, 'highlightedSearchTerm', '')">
+                         klass python:test(has_search, 'highlightedSearchTerm', '');
+                         portal context/@@plone_portal_state/portal;
+                         portal_url portal/absolute_url;">
           <a tal:attributes="href string:${file_url};
                              title file_description">
             <img tal:attributes="src string:${portal_url}/${icon}" />
@@ -247,9 +249,12 @@
     <metal:block define-macro="link">
       <div class="link block"
            tal:define="url python:proxy.getRemoteUrl();
+                       portal context/@@plone_portal_state/portal;
+                       portal_url portal/absolute_url;
                        link_description proxy/Description | python:'';
                        link_icon string:$portal_url/${proxy/getLinkIcon};
-                       title python: proxy.Title() or url;">
+                       title python: proxy.Title() or url;
+                       ">
 
         <a tal:attributes="href url;
                            title link_description"
@@ -350,7 +355,9 @@
     </metal:block>
 
     <metal:block define-macro="small_square"
-                 tal:define="image_url python:view.getImageUrl(proxy)">
+                 tal:define="image_url python:view.getImageUrl(proxy);
+                             portal context/@@plone_portal_state/portal;
+                             portal_url portal/absolute_url;">
       <div style="width: 50px; height:50px; overflow: hidden">
         <a class="thickbox"
            target="_blank"
