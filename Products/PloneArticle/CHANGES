@@ -2,15 +2,17 @@
 PloneArticle Changes
 ####################
 
-4.1.10 (svn)
+4.2.0 (svn)
 ############
+
+* Fixed widget templates for Plone 4 [tdesvenain]
 
 * Commented out isinstance checks in fileinnercontentproxy and
   imageinnercontentproxy. they break functionality when plone.app.blob is used.
   [rnix]
 
 * Updated page templates and registerType calls for Plone 4 support
-  [vangheem]
+  [vangheem] 
 
 
 4.1.9
