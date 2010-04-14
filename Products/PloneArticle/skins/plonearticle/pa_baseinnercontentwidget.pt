@@ -98,7 +98,7 @@
                   <li id="plone-article-upload-menu">
                     <a class="thickbox" href=""
                        id="plone-article-upload-link"
-                       tal:attributes="href string:${here_url}/pa_create_inner_content_widget?height=400&width=400&field_name=${fieldName};">
+                       tal:attributes="href string:${here_url}/pa_create_inner_content_widget?height=400&amp;width=400&amp;field_name=${fieldName};">
                       <span tal:replace="python:here.utranslate('label_upload_%s' % fieldName, default='Upload %s' % fieldName, domain='plonearticle')">
                         Add content
                       </span>
@@ -122,7 +122,7 @@
                    tal:attributes="id string:proxyContainer_$type">
                  <div class="innerContentWidget closed emptyContainer"
                       tal:attributes="style python:test(objs, 'display: none', '');">
-                   <span>&nbsp</span>
+                   <span>&nbsp;</span>
                    <span tal:content="python:here.utranslate('label_no_%s_inside' % fieldName, default='No %s inside this article.' % fieldName, domain='plonearticle')">No images inside this article.</span>
                  </div>
                 <tal:block repeat="proxy objs"
