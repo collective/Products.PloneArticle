@@ -9,6 +9,10 @@ PloneArticle Changes
   imageinnercontentproxy. they break functionality when plone.app.blob is used.
   [rnix]
 
+* Remove duplicate attributes in pa_model_macros.pt: chameleon don't like that.
+  [kdeldycke] 2010-04-14
+
+
 4.1.9
 #####
 

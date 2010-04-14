@@ -134,8 +134,7 @@
       <div class="photosContainer rightBlock"
            tal:define="proxies python:here.getImages(filtered=True);
                        fieldName string:images"
-           tal:condition="python: proxies"
-           class="photosContainer rightBlock">
+           tal:condition="python: proxies">
         <tal:block condition="proxies">
           <tal:block repeat="proxy proxies">
             <metal:macro use-macro="here/pa_model_macros/macros/image" />
