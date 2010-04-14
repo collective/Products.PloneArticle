@@ -147,7 +147,6 @@
       <fieldset class="leftPlaced"
                 tal:define="proxies python:here.getImages(filtered=True);
                             fieldName string:images"
-                class="leftPlaced"
                 tal:condition="proxies">
         <legend i18n:translate="legend_images">Images</legend>
         <tal:block tal:repeat="proxy proxies">
@@ -227,7 +226,7 @@
                  tal:attributes="src string:${portal_url}/preview_icon.png"
                  alt="Preview"
                  title="Preview"
-                 >
+                 />
             </a>
           </tal:block>
           <div class="proxy-description"
