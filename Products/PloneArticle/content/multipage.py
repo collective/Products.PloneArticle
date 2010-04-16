@@ -134,13 +134,12 @@ class PloneArticleMultiPage(ATFolder):
         Return the first user visible article as default page if
         ViewTOC is unchecked (i.e, it redirect the user to the first page)
         """
-
         request = getattr(self, 'REQUEST', None)
         force_toc = request.get('force_toc', False)
         pages = self.getPages()
 
         if force_toc or self.getViewTOCFirst() or len(pages) == 0:
-            return ATFolder.__call__(self)
+            return request.RESPONSE.redirect(pages[0].getObject().absolute_url() + '/folder_listing')
         else:
             return request.RESPONSE.redirect(pages[0].getObject().absolute_url())
 
