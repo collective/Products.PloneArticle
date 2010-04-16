@@ -27,11 +27,7 @@
 
         <h1 tal:content="parent_folder/title_or_id">Multipage Title</h1>
 
-        <tal:multipage_byline tal:define="here nocall:parent_folder;">
-          <div metal:use-macro="parent_folder/document_byline/macros/byline">
-            Get the byline - contains details about author and modification date.
-          </div>
-        </tal:multipage_byline>
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
 
         <div class="topNavigation"
              tal:define="toc_menu_items python:multipage.getTOCItems(here);"
