@@ -255,13 +255,8 @@ function hideSelectBoxes(){
 
 // Adon preview PloneArticle
 function highlightSearchTermsInPreview() {
-        // search-term-highlighter function --  Geir Bækholt
-        var terms = getSearchTermsFromURI(window.location.search);
-        var contentarea = document.getElementById('preview-container');
-        if (contentarea) {
-            highlightSearchTerms(terms, contentarea);
-            }
-        }
-
-
-//
+   // TODO: why sometimes highlightSearchTerms undefined ??
+   if($('preview-container').highlightSearchTerms != undefined){
+       $('preview-container').highlightSearchTerms()
+   }
+}
