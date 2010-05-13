@@ -19,6 +19,11 @@
          tal:define="models here/listModels;
                      article_types here/listArticleImplementers">
 
+      <div i18n:translate="dd_links_management">
+        This panel let you define what content types your users can pick
+        when they want to reference a content already created on the site.
+      </div>
+
       <form method="post"
             tal:define="errors options/state/getErrors;"
             tal:attributes="action python:here.absolute_url()+'/'+template.id;">
@@ -57,13 +62,11 @@
         </fieldset>
 
         <input class="context"
-               tabindex=""
                type="submit"
                name="form.button.index_save"
                value="Save"
                i18n:domain="plone"
                i18n:attributes="value label_save;"
-               tal:attributes="tabindex tabindex/next;"
                />
 
       </form>

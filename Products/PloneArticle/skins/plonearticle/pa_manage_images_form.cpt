@@ -18,6 +18,13 @@
     <div class="documentContent"
          tal:define="models here/listModels;
                      article_types here/listArticleImplementers">
+      
+      <div i18n:translate="dd_images_management">
+        This panel let you define which content types your users can
+        pick when they wants to reference an image already uploaded on
+        the site. You also can choose the maximum size the uploaded
+        images.
+      </div>
 
       <form method="post"
             tal:define="errors options/state/getErrors;"
@@ -70,13 +77,11 @@
         </fieldset>
 
         <input class="context"
-               tabindex=""
                type="submit"
                name="form.button.index_save"
                value="Save"
                i18n:domain="plone"
                i18n:attributes="value label_save;"
-               tal:attributes="tabindex tabindex/next;"
                />
 
       </form>

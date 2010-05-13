@@ -11,9 +11,14 @@
   </tal:comment>
 
   <metal:configlet-body fill-slot="pa_configlet_body">
-    <div class="documentContent"
+    <div class="documentContent" id="content"
          tal:define="models here/listModels;
                      article_types here/listArticleImplementers">
+      
+      <div i18n:translate="dd_models_management">
+                    You can define here the models that can be selected by your users.
+                    You can also select the default model.
+      </div>
 
       <form method="post"
             name="manageTopicIndex"
@@ -70,13 +75,11 @@
         </fieldset>
 
         <input class="context"
-               tabindex=""
                type="submit"
                name="form.button.index_save"
                value="Save"
                i18n:domain="plone"
                i18n:attributes="value label_save;"
-               tal:attributes="tabindex tabindex/next;"
                />
 
       </form>
