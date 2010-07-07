@@ -23,6 +23,11 @@ $Id: innercontentcontainer.py 6977 2007-12-28 11:45:13Z b_mathieu $
 __docformat__ = 'restructuredtext'
 
 # Zope imports
+try:
+    from OFS.interfaces import IOrderedContainer
+except ImportError:
+    from Products.Archetypes.interfaces import IOrderedContainer
+
 from AccessControl import ClassSecurityInfo
 from zope.interface import implements
 
@@ -33,7 +38,7 @@ from Products.CMFCore.utils import getToolByName
 # Archetypes imports
 from Products.Archetypes.OrderedBaseFolder import OrderedContainer
 from Products.Archetypes.public import BaseFolderMixin, registerType, listTypes
-from Products.Archetypes.interfaces import IOrderedContainer
+
 
 # Other imports
 from Products.PloneArticle.interfaces import IInnerContentContainer, IBaseInnerContent

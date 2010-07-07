@@ -28,7 +28,6 @@ from cgi import escape
 
 # Zope imports
 import transaction
-from Globals import InitializeClass
 from ZODB.POSException import ConflictError
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
@@ -47,6 +46,7 @@ from Products.Archetypes.public import MinimalSchema, Schema, ImageField, BaseUn
 
 # Products imports
 from Products.PloneArticle import LOG
+from Products.PloneArticle.pafti import InitializeClass
 from Products.PloneArticle.config import PLONEARTICLE_TOOL
 from Products.PloneArticle.interfaces import IPloneArticle, IPloneArticleTool, IBaseInnerContentProxy
 from Products.PloneArticle.browser.interface import IPloneArticleModelView
@@ -773,7 +773,7 @@ class PloneArticleTool(UniqueObject, SimpleItem):
             mtool = getToolByName(self, 'portal_membership')
             if mtool.checkPermission('Modify portal content', obj) :
                 return True
-                
+
 
     security.declarePublic('isEditableArticle')
     def useJquery(self, obj):
@@ -783,8 +783,8 @@ class PloneArticleTool(UniqueObject, SimpleItem):
         """
         pmig = getToolByName(self, 'portal_migration')
         if IPloneArticle.providedBy(obj) and \
-           pmig.getFSVersionTuple() < (3, 1) :    
-            return True          
+           pmig.getFSVersionTuple() < (3, 1) :
+            return True
 
 
 InitializeClass(PloneArticleTool)

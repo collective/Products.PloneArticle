@@ -35,8 +35,13 @@ from Products.Archetypes.public import ImageField, ImageWidget, ReferenceField, 
     registerType, Schema, ComputedField, ComputedWidget
 
 # Products imports
-from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
-    ReferenceBrowserWidget
+try:
+    # BBB: try to be as compatible as possible ...
+    from archetypes.referencebrowserwidget import ReferenceBrowserWidget
+except:
+    # this is marked as deprecated in plone 5.0
+    from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
+        ReferenceBrowserWidget
 
 from Products.ATContentTypes.interface import IImageContent
 
@@ -79,54 +84,54 @@ ImageInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
             ),
         ),
     ))
-    
+
 ImageInnerContentProxySchema['title'].required = False
 
 class ImageInnerContentProxy(BaseFileContentProxy):
-    """Proxy implementing IImageContent. It means this proxy has a getImage 
+    """Proxy implementing IImageContent. It means this proxy has a getImage
     method.
-    
+
     getImage returns attached image by default if existing otherwise returns
     the referenced content.
     """
-    
+
     security = ClassSecurityInfo()
     implements(IImageInnerContentProxy)
-    
+
     schema = ImageInnerContentProxySchema
 
     # You can only reference content implementing IImageContent interface
     referenceable_interfaces = (IImageContent,)
-    
+
     security.declareProtected(CCP.View, 'index_html')
     def index_html(self, REQUEST=None, RESPONSE=None):
         """Make it directly viewable when entering the objects URL.
-        
+
         We have to reproduce it to keep the same behaviour as usual for images.
         """
-        
+
         if REQUEST is None:
             REQUEST = self.REQUEST
         if RESPONSE is None:
             RESPONSE = REQUEST.RESPONSE
-        
+
         field = self.getPrimaryField()
         accessor = field.getAccessor(self)
         data = accessor()
-        
+
         #if not isinstance(data, Image):
         #    return ''
-        
+
         return data.index_html(REQUEST, RESPONSE)
-    
+
     security.declareProtected(CCP.View, 'tag')
     def tag(self, **kwargs):
         """Use proxy title for img tags: title and alt"""
-        
+
         # Scale image
         patool = getToolByName(self, PLONEARTICLE_TOOL)
         return patool.getThumbnailTag(self, 'image', **kwargs)
-    
+
 
     def setAttachedImage(self, value, **kwargs):
         """

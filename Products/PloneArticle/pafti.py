@@ -18,8 +18,16 @@
 
 
 # Zope imports
-from Globals import InitializeClass
-from Globals import DTMLFile
+try:
+    from App.class_init import InitializeClass
+except ImportError:
+    from Globals import InitializeClass
+
+try:
+    from App.special_dtml import DTMLFile
+except ImportError:
+     from Globals import DTMLFile
+
 from AccessControl import ClassSecurityInfo
 
 # CMF imports

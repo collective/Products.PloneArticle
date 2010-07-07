@@ -45,8 +45,13 @@ from plone.i18n.normalizer.interfaces import IUserPreferredURLNormalizer
 from plone.i18n.normalizer.interfaces import IURLNormalizer
 
 # Other imports
-from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
-    ReferenceBrowserWidget
+try:
+    # BBB: try to be as compatible as possible ...
+    from archetypes.referencebrowserwidget import ReferenceBrowserWidget
+except:
+    # this is marked as deprecated in plone 5.0
+    from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
+        ReferenceBrowserWidget
 from Products.Archetypes.Widget import TextAreaWidget
 
 from Products.PloneArticle.config import PLONEARTICLE_TOOL

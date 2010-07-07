@@ -35,8 +35,13 @@ from Products.Archetypes.public import StringField, \
     ComputedWidget
 
 # Products imports
-from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
-    ReferenceBrowserWidget
+try:
+    # BBB: try to be as compatible as possible ...
+    from archetypes.referencebrowserwidget import ReferenceBrowserWidget
+except:
+    # this is marked as deprecated in plone 5.0
+    from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
+        ReferenceBrowserWidget
 
 from Products.ATContentTypes.interface import IFileContent
 from Products.ATContentTypes.content.file import ATFile
@@ -122,7 +127,7 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field = self.getPrimaryField()
         accessor = field.getAccessor(self)
         data = accessor()
-        
+
         #if not isinstance(data, File):
         #    return ''
 

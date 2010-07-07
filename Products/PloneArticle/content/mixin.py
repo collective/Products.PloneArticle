@@ -20,7 +20,6 @@ This module contains all mixins used in PloneArticle
 """
 
 # Zope imports
-from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 
 # CMF imports
@@ -32,6 +31,8 @@ try:
 except ImportError:
     # No multilingual support
     from Products.Archetypes.public import BaseFolder
+
+from Products.PloneArticle.pafti import InitializeClass
 
 
 class ArticleMixin(BaseFolder):
