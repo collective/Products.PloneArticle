@@ -373,7 +373,7 @@ class PloneArticleTool(UniqueObject, SimpleItem):
                  'height="%(height)s" width="%(width)s"' % values
 
         for key, value in kwargs.items():
-            if key not in ('width', 'height', 'title', 'alt',) and value:
+            if key not in ('width', 'height', 'title', 'alt', 'maximizeTo',) and value:
                 result = '%s %s="%s"' % (result, key, value)
 
         return '%s />' % result
