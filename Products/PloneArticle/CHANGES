@@ -5,6 +5,13 @@ PloneArticle Changes
 4.1.10 (svn)
 ############
 
+* Added upgrade script 4.1.9 -> 4.1.10
+  [glenfant]
+
+* Make fake DC "Subject" methods to inner types such they don't get this
+  with acquisition.
+  [glenfant]
+
 * Commented out isinstance checks in fileinnercontentproxy and
   imageinnercontentproxy. they break functionality when plone.app.blob is used.
   [rnix]
