@@ -158,6 +158,7 @@ class PloneArticle(ArticleMixin, ATDocument):
         """
         tool = getToolByName(self, PLONEARTICLE_TOOL)
         models = tool.getModelRegistry()
+        print "PA: getAvailableLayouts"
         model_ids, default = tool.getEnabledModelsForType(self.aq_explicit.portal_type)
         result = []
         for mid in model_ids:
