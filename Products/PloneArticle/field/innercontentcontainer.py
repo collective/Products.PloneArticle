@@ -108,5 +108,10 @@ class InnerContentContainer(OrderedContainer, BaseFolderMixin):
         ids = [obj['id'] for obj in objs if obj['meta_type'] in types]
         return ids
 
+    security.declareProtected(CCP.View, 'Subject')
+    def Subject(self):
+        """Shortcutting BaseContentMixin's Subject acquired from container
+        We have no tag/keyword"""
+        return ()
 
 registerType(InnerContentContainer, PROJECTNAME)

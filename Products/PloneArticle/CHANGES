@@ -1,11 +1,18 @@
-####################
 PloneArticle Changes
-####################
+====================
 
 4.2.0 (svn)
-############
+------------
+* Resync plone4 branch with trunk [kiorky]
 
 * Fixed widget templates for Plone 4 [tdesvenain]
+
+* Added upgrade script 4.1.9 -> 4.1.10
+  [glenfant]
+
+* Make fake DC "Subject" methods to inner types such they don't get this
+  with acquisition.
+  [glenfant]
 
 * Commented out isinstance checks in fileinnercontentproxy and
   imageinnercontentproxy. they break functionality when plone.app.blob is used.
@@ -15,22 +22,25 @@ PloneArticle Changes
 
 * Updated page templates for Plone 4 support [vangheem] [tdesvenain]
 
+* Remove duplicate attributes in pa_model_macros.pt: chameleon don't like that.
+  [kdeldycke] 2010-04-14
+
 
 4.1.9
-#####
+-----
 
 * Set "content-disposition" header for files as in ATFile
   [glenfant]
 
 4.1.8
-#####
+-----
 
 * Fixed too restrictive security issue : anonymous users couldn't see embedded
   images/files. See issue #35
   [glenfant]
 
 4.1.7
-#####
+-----
 
 * Show only attachments and images available to the user such an
   anonymous user is not rejected when viewing a public article that
@@ -39,7 +49,7 @@ PloneArticle Changes
   [glenfant]
 
 4.1.6
-#####
+-----
 
 * Fixed packaging error (only .py files in the egg)
   [glenfant]
@@ -49,7 +59,7 @@ PloneArticle Changes
 * Doc errors found and fixed.
 
 4.1.5
-#####
+-----
 
 * Fix pa_browser url : url is no more depending on base href
   [macadames] 2009-06-05
@@ -63,13 +73,13 @@ PloneArticle Changes
   [macadames] 2009-09-04
 
 4.1.4
-#####
+-----
 
 * Identical release (egg generation failed)
   [glenfant]
 
 4.1.3
-#####
+-----
 
 * IE6 fix for the javascript image viewer
 
@@ -77,7 +87,7 @@ PloneArticle Changes
   [encolpe] 2009-02-26
 
 4.1.2
-#####
+-----
 
 * Added russian translation, thanks to Roman Susi.
   [glenfant] 2009-01-30
@@ -89,7 +99,7 @@ Take care : 4.1.1 egg was containing an old file : kssregistry.xml
 A bug with collective.releaser ?
 
 4.1.1
-#####
+-----
 
 * Kss inline edit for proxies (images, files, links)
   replaced by jQuery methods
@@ -147,7 +157,7 @@ A bug with collective.releaser ?
 
 
 4.1.0-final
-###########
+-----------
 
 * Kss menus are always shown under Plone3.0
   (when iline_edit_enable property is not available in site_propertis)
@@ -157,7 +167,7 @@ A bug with collective.releaser ?
   [macadames] 2008-11-05
 
 4.1.0 RC2
-#########
+---------
 
 * Fix error in setuphandlers.py (setupKupu) and Extensions/Install.py (uninstall method) :
   Sometimes inexistant portal_types are stored as resources in kuputool
@@ -171,7 +181,7 @@ A bug with collective.releaser ?
   [macadames] 2008-10-25
 
 4.1.0 RC1
-#########
+---------
 
 * Make tests running without errors also under MSWindows.
   Text from Attached files seems to be indexed in lowercase under Windows, so we test only indexation in lowercase.
@@ -201,7 +211,7 @@ A bug with collective.releaser ?
   [encolpe] 2008-06-18
 
 4.1.0 beta 3
-############
+------------
 
 * Added specific add permission for multi-page content type
 
@@ -222,7 +232,7 @@ A bug with collective.releaser ?
   [yboussard] 2008-04-25
 
 4.1.0 beta 2
-############
+------------
 
 * Copying/pasting an article preserves referenced files/images/links,
   using the new 'keepReferencesOnCopy' kw arg on ReferenceFields. Note
@@ -302,7 +312,7 @@ A bug with collective.releaser ?
 
 
 4.1.0 beta 1
-############
+------------
 
 * Modified the image browser to display the arrows only when there is a
   previous/next image to display
@@ -387,17 +397,17 @@ A bug with collective.releaser ?
 * Added a new preview icon
 
 4.0.0
-#####
+-----
 
 * Fixed unit tests
 
 4.0.0-rc6
-#########
+---------
 
 * Hide "Templates" tab on new (temporary) objects (glenfant).
 
 4.0.0-rc5
-#########
+---------
 
 * fix acquisition & import bugs
 
@@ -407,7 +417,7 @@ A bug with collective.releaser ?
     compliant with LinguaPlone
 
 4.0.0-rc4
-#########
+---------
 
 * fix templates bugs when referenced files are deleted
 
@@ -427,7 +437,7 @@ A bug with collective.releaser ?
     when attachmentField is used by proxy
 
 4.0.0-rc3
-#########
+---------
 
 * Add tutorial / examples
 
@@ -436,7 +446,7 @@ A bug with collective.releaser ?
 * Fix a content type linked bug
 
 4.0.0-rc2
-#########
+---------
 
 * Fix reindexation bug after migration from Plone 2.0.5 and Zope 2.7
 
@@ -445,14 +455,14 @@ A bug with collective.releaser ?
 * Fix some docs
 
 4.0.0-rc1
-#########
+---------
 
 * Save all changes in plonearticle while manipulating files, images and links.
   Save button of edit form is only used to save modifications of title or
   description
 
 4.0.0-beta6
-###########
+-----------
 
 * When updating value of inner content field don't reorder content. All new
   values will be append to existing ones
@@ -464,7 +474,7 @@ A bug with collective.releaser ?
 * plonearticle_edit.pt removed
 
 4.0.0-beta5
-###########
+-----------
 
 * "Error: Image dimensions unknown" when uploading an image whose dimensions
   can't be decided.
@@ -472,7 +482,7 @@ A bug with collective.releaser ?
 * getImageDimensions now guarantees to return integer values for width and height
 
 4.0.0-beta4
-###########
+-----------
 
 * Added a status bar in the browser to display content loading status
 
@@ -490,7 +500,7 @@ A bug with collective.releaser ?
 * Added 'migration' tab in ZMI to plonearticle_tool
 
 4.0.0beta3
-##########
+----------
 
 * Fixed referenceable links
 
@@ -499,12 +509,11 @@ A bug with collective.releaser ?
 * Fixed referenceable links
 
 4.0.0beta2
-##########
+----------
 
 * InnerContentField are indexable (searchable=True)
 
 4.0.0beta1
-##########
+----------
 
 * Full refactoring. Everything Archetypes.
-

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-## 
+##
 ## Copyright (C) 2008 Ingeniweb
 
 ## This program is free software; you can redistribute it and/or modify
@@ -22,3 +22,19 @@ __version__ = "$Revision:  $"
 # $Source:  $
 # $Id:  $
 __docformat__ = 'restructuredtext'
+
+def stable419_4110(portal):
+    """Reindexing Subject on all artices subcontents such they are not
+    found on keyword searches
+    """
+    catalog = portal.portal_catalog
+    types_to_reindex = ['FileInnerContentProxy', 'ImageInnerContentProxy',
+        'LinkInnerContentProxy', 'InnerContentContainer']
+    for brain in catalog.searchResults(portal_type=types_to_reindex):
+        try:
+            content = brain.getObject()
+        except:
+            # Ghost brain ?
+            continue
+        content.reindexObject(idxs=['Subject'])
+    return

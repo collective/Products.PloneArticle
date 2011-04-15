@@ -200,6 +200,12 @@ class BaseInnerContentProxy(BaseContentMixin):
             pass
         return value
 
+    security.declareProtected(CCP.View, 'Subject')
+    def Subject(self):
+        """Shortcutting BaseContentMixin's Subject acquired from container
+        We have no tag/keyword"""
+        return ()
+
 
 def innerContentAdded(ob, event):
     """Supersedes the BaseInnerContentProxy.manage_afterAdd with events machinery,
