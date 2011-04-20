@@ -25,6 +25,7 @@ from Products.CMFEditions.StandardModifiers import manage_addOMInsideChildrensMo
 from Products.ATContentTypes.configuration import zconf as atct_zconf
 from Products.PloneArticle.config import PROJECTNAME, PLONEARTICLE_TOOL
 from Products.CMFCore.utils import getToolByName
+import logging
 
 class HiddenProductsNProfiles(object):
     implements(INonInstallable)
@@ -92,6 +93,7 @@ def setupModifier(context):
 @thisProfileOnly
 def setupKupu(context):
     """Update kupu properties"""
+    logger = logging.getLogger('PloneArticle.setuphandlers.setupKupu')
 
     # Should be done by GS with kupu.xml but exportimport.py of kupu supports only full configuration
 
@@ -109,6 +111,9 @@ def setupKupu(context):
             }
 
         for resource_type in ('linkable', 'mediaobject', 'containsanchors', 'collection'):
+            if not resource_type in ktool._res_types:
+                logger.warn('Can\'t setup resource type: %s' % resource_type)
+                continue
             new_types = list(ktool.getPortalTypesForResourceType(resource_type))
             
             # avoid bugs with ktool.getPortalTypesForResourceType

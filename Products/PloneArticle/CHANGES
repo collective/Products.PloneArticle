@@ -5,6 +5,8 @@ PloneArticle Changes
 ------------
 * Resync plone4 branch with trunk [kiorky]
 
+* Fix setupKupu if resources are not there, just warn [kiorky]
+
 * Fixed widget templates for Plone 4 [tdesvenain]
 
 * Added upgrade script 4.1.9 -> 4.1.10
