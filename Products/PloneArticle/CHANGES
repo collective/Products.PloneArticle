@@ -4,6 +4,8 @@ PloneArticle Changes
 4.2.0 (plone-4-support svn branch)
 ----------------------------------
 
+* Smart field allowed criteria changed since Plone 4.0, due to catalog changes [glenfant]
+
 * The "Large Plone Folder" is gone in Plone 4 so it can't be a target of a
   reference [glenfant]
 
