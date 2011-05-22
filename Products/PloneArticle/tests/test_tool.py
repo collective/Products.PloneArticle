@@ -23,18 +23,29 @@ __docformat__ = 'restructuredtext'
 
 # CMF imports
 from Products.CMFCore.utils import getToolByName
-
+from Products.PloneTestCase.setup import PLONE40
 # Products imports
 from Products.PloneArticle.config import PLONEARTICLE_TOOL
 from Products.PloneArticle.tests.common import BaseTestCase
+
+
+if PLONE40:
+    LINKS_TYPES = [
+        'Document', 'Event', 'File', 'Folder', 'Image', 'Link', 'News Item',
+        'PloneArticle', 'PloneArticleMultiPage', 'Topic'
+        ]
+else:
+    #Plone 3.x or older
+    LINKS_TYPES = [
+        'Image', 'Topic', 'Large Plone Folder', 'Document', 'PloneArticleMultiPage',
+        'Favorite', 'Event', 'Folder', 'Link', 'News Item', 'File', 'PloneArticle'
+        ]
 
 expected_ref_types = {
     'PloneArticle': {
         'files': ['File'],
         'images': ['Image', 'News Item'],
-        'links': ['Image', 'Topic', 'Large Plone Folder', 'Document', \
-            'PloneArticleMultiPage', 'Favorite', 'Event', 'Folder', 'Link', \
-            'News Item', 'File', 'PloneArticle']
+        'links': LINKS_TYPES
         }
     }
 
@@ -69,15 +80,13 @@ class ArticleToolTestCase(BaseTestCase):
     def testUpdateReferenceableTypes(self):
         tool = self.tool
         self.failUnless(hasattr(tool, 'referenceable_types'))
-        
-        tool.updateReferenceableTypes()               
+
+        tool.updateReferenceableTypes()
         ref_types = tool.referenceable_types
         for schema_id in ('files', 'images', 'links'):
             value = ref_types['PloneArticle'][schema_id]
-            value.sort()
             expected_value = expected_ref_types['PloneArticle'][schema_id]
-            expected_value.sort()
-            self.assertEqual(value, expected_value)
+            self.assertEqual(set(value), set(expected_value))
 
         tool.updateReferenceableTypes(updates=update_types)
         ref_types = tool.referenceable_types
@@ -85,7 +94,7 @@ class ArticleToolTestCase(BaseTestCase):
         self.failIf('Link' in ref_types['PloneArticle']['images'])
 
         del tool.referenceable_types['PloneArticle']['files']
-        tool.updateReferenceableTypes()   
+        tool.updateReferenceableTypes()
         ref_types = tool.referenceable_types
         value = ref_types['PloneArticle']['files']
         value.sort()
@@ -97,20 +106,16 @@ class ArticleToolTestCase(BaseTestCase):
         ref_types = tool.referenceable_types
         for schema_id in ('files', 'images', 'links'):
             value = ref_types['PloneArticle'][schema_id]
-            value.sort()
             expected_value = expected_ref_types['PloneArticle'][schema_id]
-            expected_value.sort()
-            self.assertEqual(value, expected_value)
+            self.assertEqual(set(value), set(expected_value))
 
         tool.updateReferenceableTypes(updates=update_types, reset=True)
         ref_types = tool.referenceable_types
         for schema_id in ('files', 'images', 'links'):
             value = ref_types['PloneArticle'][schema_id]
-            value.sort()
             expected_value = expected_ref_types['PloneArticle'][schema_id]
-            expected_value.sort()
-            self.assertEqual(value, expected_value)
-        
+            self.assertEqual(set(value), set(expected_value))
+
     def testGetScaleSize(self):
         tool = self.tool
         img = FakeImage()
@@ -118,8 +123,8 @@ class ArticleToolTestCase(BaseTestCase):
         self.assertEqual(tool._getScaleSize(img, 100, 80), expected_sizes)
         expected_sizes = (100, 80)
         self.assertEqual(tool._getScaleSize(img, 100, 100), expected_sizes)
-        
-        
+
+
     def test_getSetEnabledModelsForType(self):
         tool = self.tool
         models = tool.listModels()
@@ -170,11 +175,11 @@ class ArticleToolTestCase(BaseTestCase):
                 )
             )
 
-        
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
     suite.addTest(makeSuite(ArticleToolTestCase))
     return suite
-            
+
 
