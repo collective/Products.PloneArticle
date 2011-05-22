@@ -4,6 +4,9 @@ PloneArticle Changes
 4.2.0 (plone-4-support svn branch)
 ----------------------------------
 
+* The "Large Plone Folder" is gone in Plone 4 so it can't be a target of a
+  reference [glenfant]
+
 * Fixed the test request such it acts (partially) like a mapping [glenfant]
 
 * Replaced deprecated "isImplementedBy" with "providedBy" everywhere [glenfant]
@@ -16,6 +19,9 @@ PloneArticle Changes
 * Fix setupKupu if resources are not there, just warn [kiorky]
 
 * Fixed widget templates for Plone 4 [tdesvenain]
+
+4.1.10
+------
 
 * Added upgrade script 4.1.9 -> 4.1.10
   [glenfant]
