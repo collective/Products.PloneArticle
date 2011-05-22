@@ -29,7 +29,7 @@ from StringIO import StringIO
 # CMF imports
 from Products.CMFCore.utils import getToolByName
 
-from Products.PloneTestCase.setup import PLONE21, PLONE25, PLONE30
+from Products.PloneTestCase.setup import PLONE21, PLONE25, PLONE30, PLONE40
 
 # Archetypes imports
 from Products.Archetypes.tests.utils import mkDummyInContext, makeContent
@@ -48,7 +48,15 @@ from Products.PloneArticle.config import PROJECTNAME
 def lowcase_cmp(s1, s2):
     return cmp(s1.lower(), s2.lower())
 
-if PLONE30:
+if PLONE40:
+    ALL_ALLOWED_CRITERIAS = (
+        'allowedRolesAndUsers', 'cmf_uid', 'Creator', 'getId', 'getRawRelatedItems',
+        'id', 'in_reply_to', 'is_default_page', 'is_folderish', 'meta_type',
+        'object_provides', 'path', 'portal_type', 'review_state', 'SearchableText',
+        'sortable_title', 'Subject', 'Type', 'UID'
+        )
+
+elif PLONE30:
     ALL_ALLOWED_CRITERIAS= (
         'allowedRolesAndUsers', 'Creator', 'getEventType', 'getId',
         'getObjPositionInParent', 'getRawRelatedItems', 'id', 'in_reply_to',
