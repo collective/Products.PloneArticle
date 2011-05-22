@@ -222,8 +222,8 @@ def innerContentAdded(ob, event):
 
     if is_copy and src_uid is not None:
         # Get source object
-        atool = getToolByName(ob, "archetype_tool")
-        src_obj = atool.getObject(src_uid)
+        reftool = getToolByName(ob, "reference_catalog")
+        src_obj = reftool.lookupObject(src_uid)
 
         if src_obj is not None:
             # Get references from source object
