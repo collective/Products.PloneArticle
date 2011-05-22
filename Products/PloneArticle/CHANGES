@@ -4,6 +4,8 @@ PloneArticle Changes
 4.2.0 (plone-4-support svn branch)
 ----------------------------------
 
+* Replaced deprecated "isImplementedBy" with "providedBy" everywhere [glenfant]
+
 * Archetypes tool stopped providing getObject(uuid) method, using reference_catalog
   instead [glenfant]
 
