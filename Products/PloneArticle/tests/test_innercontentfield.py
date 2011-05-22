@@ -30,13 +30,28 @@ from Products.CMFCore.utils import getToolByName
 
 # Archetypes imports
 from Products.Archetypes.tests.utils import mkDummyInContext
-from Products.Archetypes.tests.test_fields import FakeRequest
+from Products.Archetypes.tests.test_fields import FakeRequest as BaseRequest
+#from zope.publisher.browser import TestRequest
 from Products.Archetypes.public import Schema, BaseFolderMixin
 
 # Products imports
 from Products.PloneArticle.tests.common import BaseTestCase, loadFile
 from Products.PloneArticle import field as pa_fields
 from Products.PloneArticle import proxy as pa_proxies
+
+class FakeRequest(BaseRequest):
+    def __setitem__(self, key, value):
+        self.other[key] = value
+        return
+
+    def __getitem__(self, key):
+        return self.other[key]
+
+    def get(self, key, default=None):
+        if key in self.other:
+            return self.other[key]
+        else:
+            return default
 
 # we do as archetypes do for testing fields
 test_fields = [

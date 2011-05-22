@@ -101,6 +101,8 @@ class InnerContentContainer(OrderedContainer, BaseFolderMixin):
         with moveObjectsByDelta(...)"""
 
         ttool = getToolByName(self, 'portal_types')
+
+        # FIXME: passing 'by_metatype' is deprecated but there's no replacement API
         cmf_meta_types = ttool.listContentTypes(by_metatype=1)
         cmf_types = ttool.listContentTypes()
         arch_meta_types = [t['meta_type'] for t in listTypes()]

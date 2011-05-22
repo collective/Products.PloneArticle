@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 ## PloneArticle
-## 
+##
 ## Copyright (C) 2006 Ingeniweb
 
 ## This program is free software; you can redistribute it and/or modify
@@ -27,6 +27,7 @@ from Products.Archetypes.atapi import registerType
 # Products imports
 from Products.PloneArticle.pafti import PloneArticleFactoryTypeInformation
 from Products.PloneArticle.tests.common import BaseTestCase
+from Products.CMFPlone.utils import getFSVersionTuple
 
 class PAFTITestCase(BaseTestCase):
     """
@@ -40,7 +41,7 @@ class PAFTITestCase(BaseTestCase):
 
     def test_PA_content_FTI(self):
         self.assert_(isinstance(self.fti, PloneArticleFactoryTypeInformation))
-        
+
     def test_getAvailableReferenceableAttachmentTypes(self):
         self.assertEquals(self.fti.getAvailableReferenceableAttachmentTypes(),
                           ['File'])
@@ -54,12 +55,19 @@ class PAFTITestCase(BaseTestCase):
 
     def test_getAvailableReferenceableLinkTypes(self):
         value = self.fti.getAvailableReferenceableLinkTypes()
-        value.sort()
-        expected_value = ['Image', 'Topic', 'Large Plone Folder', 'Document',
-            'PloneArticleMultiPage', 'Favorite', 'Event', 'Folder', 'Link', 
-            'News Item', 'File', 'PloneArticle',]
-        expected_value.sort()
-        self.assertEquals(value, expected_value)
+        if getFSVersionTuple() > (4, 0):
+            expected_value =  [
+                'Document', 'Event', 'File', 'Folder', 'Image', 'Link',
+                'News Item', 'PloneArticle', 'PloneArticleMultiPage', 'Topic'
+                ]
+        else:
+            # Plone 3.x
+            expected_value = [
+                'Image', 'Topic', 'Large Plone Folder', 'Document', 'PloneArticleMultiPage',
+                'Favorite', 'Event', 'Folder', 'Link', 'News Item', 'File', 'PloneArticle'
+                ]
+
+        self.assertEquals(set(value), set(expected_value))
 
 class DynamicAllowedContentFTITestCase(BaseTestCase):
     """
@@ -75,7 +83,7 @@ class DynamicAllowedContentFTITestCase(BaseTestCase):
         self.assertEquals(fti.allowType('FileInnerContentProxy'), True)
         self.assertEquals(fti.allowType('ImageInnerContentProxy'), True)
         self.assertEquals(fti.allowType('File'), False)
-        
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()
