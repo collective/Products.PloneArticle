@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
+
 def _textFromPath(*names):
     here = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(here, *names)
