@@ -134,6 +134,7 @@ Proxy.saveForm = function(closeEditWindow) {
                Proxy.saveonblur();
                jQuery('#kss-spinner').hide();
                }
+           jq('#reindex_only_position').remove();
            } });
    jQuery('#pa_unload_protection_flag_' + Article.type).val(0);
 }
