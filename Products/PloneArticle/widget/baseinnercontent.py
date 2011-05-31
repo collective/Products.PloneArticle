@@ -135,6 +135,7 @@ class BaseInnerContentWidget(TypesWidget):
                 if inner_content_value is _marker or inner_content_value is None:
                     continue
                 inner_content_values[inner_content_field.getName()] = inner_content_value
+            inner_content_values['idxs_to_reindex'] = form.get('idxs_to_reindex', [])
             value.append(inner_content_values)
 
         return tuple(value), {}

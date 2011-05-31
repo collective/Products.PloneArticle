@@ -262,6 +262,10 @@ class BaseInnerContentField(Field):
             # (it's the key)
             del inner_content_field_values['id']
 
+            #Patch for getObjectPoitionReindex
+            idxs = inner_content_field_values.get('idxs_to_reindex',[])
+            del inner_content_field_values['idxs_to_reindex']
+       
             # Update inner content fields (new and already existing)
             for field_name, field_args in inner_content_field_values.items():
                 field = inner_content.getField(field_name)
@@ -271,7 +275,13 @@ class BaseInnerContentField(Field):
 
             # Then reindex object
             if to_reindex:
-                inner_content.reindexObject()
+                #inner_content.reindexObject()
+                if idxs:
+                    inner_content.reindexObject(idxs=idxs)
+                    print "\nreindex position index in %s\n" %str(inner_content)
+                else:
+                    print "\nreindex all index in %s\n" %str(inner_content)
+                    inner_content.reindexObject()
 
     security.declarePublic('getInnerContentSchema')
     def getInnerContentSchema(self, instance):

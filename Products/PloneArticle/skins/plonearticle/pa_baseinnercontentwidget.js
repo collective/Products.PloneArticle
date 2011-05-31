@@ -103,6 +103,9 @@ Proxy.drop = function(e) {
 		if (proxy == this)
 			return position = index;
 	});
+       if (jq('#reindex_only_position').length==0)
+               input = jq('<input id="reindex_only_position" type="hidden" name="idxs_to_reindex:list" value="reindex_only_position">');
+               jQuery('.innerContentWidgetContainer').append(input)
 	Proxy.refresh(true);
 };
 

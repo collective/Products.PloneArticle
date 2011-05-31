@@ -217,7 +217,7 @@ class PloneArticle(ArticleMixin, ATDocument):
                 __traceback_info__ = (self, field, mutator)
                 result[1]['field'] = field.__name__
                 mapply(mutator, result[0], **result[1])
-    
+            print '\nreindex article\n' 
             self.reindexObject()        
 
 registerType(PloneArticle)
