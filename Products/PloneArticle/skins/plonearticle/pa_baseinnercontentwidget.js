@@ -104,8 +104,10 @@ Proxy.drop = function(e) {
 			return position = index;
 	});
        if (jq('#reindex_only_position').length==0)
+               {
                input = jq('<input id="reindex_only_position" type="hidden" name="idxs_to_reindex:list" value="reindex_only_position">');
                jQuery('.innerContentWidgetContainer').append(input)
+               }
 	Proxy.refresh(true);
 };
 
@@ -134,7 +136,8 @@ Proxy.saveForm = function(closeEditWindow) {
                Proxy.saveonblur();
                jQuery('#kss-spinner').hide();
                }
-           jq('#reindex_only_position').remove();
+           if (jq('#reindex_only_position').length!=0)
+               jq('#reindex_only_position').remove();
            } });
    jQuery('#pa_unload_protection_flag_' + Article.type).val(0);
 }
