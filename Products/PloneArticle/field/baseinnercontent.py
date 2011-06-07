@@ -158,7 +158,6 @@ class BaseInnerContentField(Field):
               'title': ('Referenced image', {})})
 
         """
-
         if kwargs.get('_initializing_', False):
             return
 
@@ -264,7 +263,8 @@ class BaseInnerContentField(Field):
 
             #Patch for getObjectPoitionReindex
             idxs = inner_content_field_values.get('idxs_to_reindex',[])
-            del inner_content_field_values['idxs_to_reindex']
+            if inner_content_field_values.has_key('idxs_to_reindex'):
+                del inner_content_field_values['idxs_to_reindex']
        
             # Update inner content fields (new and already existing)
             for field_name, field_args in inner_content_field_values.items():
