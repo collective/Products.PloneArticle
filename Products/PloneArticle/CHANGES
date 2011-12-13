@@ -1,6 +1,14 @@
 PloneArticle Changes
 ====================
 
+4.1.11 - unreleased
+-------------------
+
+* fixed plonearticle_tool pickling error when installing in a fresh
+  plone 3.3.6 the first time
+  [petschki]
+
+
 4.1.10 (svn)
 ------------
 

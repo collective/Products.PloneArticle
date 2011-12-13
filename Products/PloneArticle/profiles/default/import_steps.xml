@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <import-steps>
  <import-step id="plonearticle-tool" version="4.1.5"
-	      handler="Products.PloneArticle.setuphandlers.setupTool"
+          handler="Products.PloneArticle.setuphandlers.setupTool"
               title="PloneArticleTool setup">
+    <dependency step="toolset" />
     PloneArticleTool installation step.
  </import-step>
  <import-step id="plonearticle-modifier" version="4.1.5"

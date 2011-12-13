@@ -63,10 +63,10 @@ def setupTool(context):
     if atool is None:
         site.manage_addProduct[PROJECTNAME].manage_addTool('PloneArticleTool')
         atool = getattr(site, PLONEARTICLE_TOOL, None)
-        atool.setVersionFromFS()
 
-    numvers, version = atool.getVersion()
-    if not numvers and not version:
+    try:
+        atool.setVersionFromFS()
+    except:
         # we are reinstalling over an older version. Set to the first one from
         # which we can migrate
         atool.setInstanceVersion('3.2.99')
@@ -110,17 +110,17 @@ def setupKupu(context):
 
         for resource_type in ('linkable', 'mediaobject', 'containsanchors', 'collection'):
             new_types = list(ktool.getPortalTypesForResourceType(resource_type))
-            
+
             # avoid bugs with ktool.getPortalTypesForResourceType
             # sometimes unavailable types can be always registered after a product uninstall
             for type_id in new_types :
                 if type_id not in available_types :
                     new_types.remove(type_id)
                     print 'contenttype removed from kupu resource %s : %s \n' %(resource_type, type_id )
-                    
+
             for type_id in kupu_resources[resource_type]:
                 if type_id in new_types:
-                    continue 
+                    continue
                 new_types.append(type_id)
             new_resources = []
             new_resources.append({
