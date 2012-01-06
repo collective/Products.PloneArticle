@@ -4,6 +4,10 @@ PloneArticle Changes
 4.2.0 (unreleased)
 ------------------
 
+* Fixed plonearticle_tool pickling error when installing in a fresh
+  plone 3.3.6 the first time.
+  [petschki]
+
 * Smart field allowed criteria changed since Plone 4.0, due to catalog changes [glenfant]
 
 * The "Large Plone Folder" is gone in Plone 4 so it can't be a target of a
@@ -22,13 +26,9 @@ PloneArticle Changes
 
 * Fixed widget templates for Plone 4 [tdesvenain]
 
-* fixed plonearticle_tool pickling error when installing in a fresh
-  plone 3.3.6 the first time
-  [petschki]
 
-
-4.1.10
-------
+4.1.10 (2010-09-15)
+-------------------
 
 * Added upgrade script 4.1.9 -> 4.1.10
   [glenfant]
