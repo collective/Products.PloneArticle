@@ -21,5 +21,5 @@ abtool = getToolByName(context, 'plonearticle_tool')
 
 try:
     return abtool.getThumbnail(context, thumbnail_id, request)
-except:
+except Exception:
     raise NotFound, "Unknown page."

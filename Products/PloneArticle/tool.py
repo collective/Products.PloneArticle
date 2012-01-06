@@ -61,7 +61,7 @@ USE_ATTACHMENT_FIELD = True
 
 try:
     from Products.AttachmentField import AttachmentField
-except:
+except ImportError:
     USE_ATTACHMENT_FIELD = False
 
 # Parse thumbnail id
@@ -549,11 +549,11 @@ class PloneArticleTool(UniqueObject, SimpleItem):
         # Try fetching width and height as int. If it fails, fall-back to 0.
         try:
             width=int(image.width)
-        except:
+        except Exception:
             pass
         try:
             height=int(image.height)
-        except:
+        except Exception:
             pass
         return width, height
 
@@ -672,7 +672,7 @@ class PloneArticleTool(UniqueObject, SimpleItem):
 
             except ConflictError:
                 raise
-            except:
+            except Exception:
                 exc_type, exc_value, exc_tb = sys.exc_info()
                 result_log.append(("Upgrade aborted", logging.ERROR))
                 result_log.append(("Error type: %s" % exc_type, logging.ERROR))

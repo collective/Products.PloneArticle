@@ -106,7 +106,7 @@ article__implements__ = ()
 try:
     #Plone 4 ATContentTypes no longer uses __implements__
     article__implements__ = ATDocument.__implements__
-except:
+except Exception:
     pass
 
 class PloneArticle(ArticleMixin, ATDocument):

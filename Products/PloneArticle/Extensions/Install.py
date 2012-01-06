@@ -139,7 +139,7 @@ kupu_resources = {
 #     cptool = getToolByName(self, 'portal_controlpanel')
 #     try:
 #         cptool.registerConfiglet(**plonearticle_management_configlet)
-#     except:
+#     except Exception:
 #         pass
 
 #     # Add portal types to portal factory
@@ -200,7 +200,7 @@ def uninstall(self):
     try:
         cptool = getToolByName(self, 'portal_controlpanel')
         cptool.unregisterApplication(PROJECTNAME)
-    except:
+    except Exception:
         pass
 
     out.write('Uninstallation completed.\n')

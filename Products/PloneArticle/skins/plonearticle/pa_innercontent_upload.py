@@ -50,7 +50,7 @@ try:
     value = {"id": tmp_content.getId(),}
     value.update(kwargs)
     mutator((value,), update=True)
-except:
+except Exception:
     exception = context.plone_utils.exceptionString()
     message = "Uploaded content error: %s" % exception
     return template(from_upload=True, skip_widget=True, fail_reason=message)

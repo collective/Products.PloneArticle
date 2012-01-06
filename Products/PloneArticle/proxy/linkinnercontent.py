@@ -34,10 +34,8 @@ from Products.Archetypes.public import StringField, StringWidget, registerType,\
 
 # Products imports
 try:
-    # BBB: try to be as compatible as possible ...
     from archetypes.referencebrowserwidget import ReferenceBrowserWidget
-except:
-    # this is marked as deprecated in plone 5.0
+except ImportError:
     from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
         ReferenceBrowserWidget
 

@@ -67,7 +67,7 @@ def setupTool(context):
 
     try:
         atool.setVersionFromFS()
-    except:
+    except Exception:
         # we are reinstalling over an older version. Set to the first one from
         # which we can migrate
         atool.setInstanceVersion('3.2.99')

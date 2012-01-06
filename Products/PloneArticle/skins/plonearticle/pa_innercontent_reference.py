@@ -37,7 +37,7 @@ try:
               "description": obj.Description(),
               "referencedContent": uid},),
              update=True)
-except:
+except Exception:
     exception = context.plone_utils.exceptionString()
     message = "Referenced content error: %s" % exception
     return template(from_upload=False, skip_widget=True, fail_reason=message)

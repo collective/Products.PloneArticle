@@ -33,7 +33,7 @@ def stable419_4110(portal):
     for brain in catalog.searchResults(portal_type=types_to_reindex):
         try:
             content = brain.getObject()
-        except:
+        except Exception:
             # Ghost brain ?
             continue
         content.reindexObject(idxs=['Subject'])
