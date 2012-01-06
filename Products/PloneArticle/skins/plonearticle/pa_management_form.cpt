@@ -5,7 +5,7 @@
         xmlns:tal="http://xml.zope.org/namespaces/tal"
         xmlns:metal="http://xml.zope.org/namespaces/metal"
         xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-        metal:use-macro="here/prefs_main_template/macros/master"
+        metal:use-macro="context/prefs_main_template/macros/master"
         i18n:domain="plonearticle">
 
     <tal:comment replace="nothing">
@@ -13,68 +13,14 @@
       PloneArticle configlet master template
       ######################################
       $Id: pa_management_form.cpt 6192 2007-07-24 17:08:40Z glenfant $
-    </tal:comment>
-    
-    <metal:head fill-slot="top_slot">
-      <tal:block define="macro edit_macros/topslot | nothing"
-                 condition="macro">
-        <metal:block use-macro="macro" />
-      </tal:block>
-    </metal:head>
-    
-    <metal:javascript_head fill-slot="javascript_head_slot">
-      <tal:block define="macro here/archetypes_custom_js/macros/javascript_head | nothing"
-                 condition="macro">
-        <metal:block use-macro="macro" />
-      </tal:block>
-      <tal:js condition="js"
-              repeat="item js">
-        <script type="text/javascript"
-                charset="iso-8859-1"
-                tal:condition="python:exists('portal/%s' % item)"
-                tal:attributes="src string:$portal_url/$item">
-        </script>
-      </tal:js>
-      <tal:block define="macro edit_macros/javascript_head | nothing"
-                 condition="macro">
-        <metal:block use-macro="macro" />
-      </tal:block>
-    </metal:javascript_head>
-    
-    <metal:css fill-slot="css_slot">
-      <tal:css condition="css"
-               repeat="item css">
-        <style type="text/css"
-               media="all"
-               tal:condition="python:exists('portal/%s' % item)"
-               tal:content="string:@import url($portal_url/$item);">
-        </style>
-      </tal:css>
-      <tal:block define="macro edit_macros/css | nothing"
-                 condition="macro">
-        <metal:block use-macro="macro" />
-      </tal:block>
-    </metal:css>
-    
-    <body>
-      
-      <metal:fill fill-slot="prefs_configlet_main">
+        </tal:comment>
 
-        <div class="configlet">
-          
-          <div class="documentEditable">
-            
-            <h1 i18n:translate="label_article_preferences">PloneArticle preferences</h1>
-            
-            <a href="" class="link-parent"
-               i18n:domain="plone"
-               tal:attributes="href string: $portal_url/plone_control_panel"
-               i18n:translate="label_up_to_plone_setup">
-              Up to Site Setup
-            </a>
-            
-            <!-- simulating views on the topics pages until we have real objects. -->
-            <ul class="contentViews"
+    <body>
+      <metal:fill fill-slot="prefs_configlet_content">
+        <div id="region-content" class="documentEditable">
+          <!-- simulating views on the topics pages until we have real objects. -->
+          <div id="edit-bar">
+            <ul class="contentViews" id="content-views"
                 tal:define="tabs python:context.configletThumbnails(REQUEST=request)">
               <tal:loop repeat="tab tabs">
                 <li class="#"
@@ -86,24 +32,34 @@
                   </a>
                 </li>
               </tal:loop>
-
             </ul>
-            
+          </div>
+          <div id="content" class="documentContent">
+            <h1 class="documentFirstHeading"
+                i18n:translate="label_article_preferences">PloneArticle preferences</h1>
+
+            <div  class="documentDescription" i18n:translate="help_plonearticle_conf">
+              Theses panels will help you to set up Plone Article to fit your
+              needs.
+            </div>
+
+            <a href="" class="link-parent"
+               i18n:domain="plone"
+               tal:attributes="href string: $portal_url/plone_control_panel"
+               i18n:translate="label_up_to_plone_setup">
+              Up to Site Setup
+            </a>
+
+
             <div class="contentActions">&nbsp;</div>
 
+
             <metal:configlet-body define-slot="pa_configlet_body">
-              
               <tal:comment replace="nothing">
                 Other PA configlets put their specific stuff here
                 #################################################
               </tal:comment>
-              
-              <div class="documentContent">
-                
-                <span i18n:translate="help_plonearticle_conf">
-                  Theses panels will help you to set up Plone Article to fit your
-                  needs.
-                </span>
+              <div id="content-core">
                 <dl>
                   <dt>
                     <a
@@ -168,16 +124,11 @@
                   You can set these options for each content types that are based on
                   PloneArticle.
                 </div>
-
               </div>
-            </metal:configlet-body>            
+              </metal:configlet-body>
+            </div>
           </div>
-        </div>
-        
       </metal:fill>
-      
     </body>
-    
   </html>
-
 </metal:master>

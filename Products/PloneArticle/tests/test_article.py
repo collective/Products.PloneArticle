@@ -44,11 +44,11 @@ class PloneArticleTestCase(BaseTestCase):
         self.loginAsPortalOwner()
         self.article = self.addPloneArticle(self.portal, 'article')
         self.logout()
-    
+
     def testSkeleton(self):
-        """Add new PloneArticle content and test its class skeleton"""        
+        """Add new PloneArticle content and test its class skeleton"""
         article = self.article
-        
+
         # Test methods
         self.failUnless(hasattr(article, 'Title'))
         self.failUnless(hasattr(article, 'setTitle'))
@@ -73,15 +73,15 @@ class PloneArticleTestCase(BaseTestCase):
 
         article = self.article
 
-        self.failUnless(INonStructuralFolder.isImplementedBy(article))
-        self.failUnless(IPloneArticle.isImplementedBy(article))
-        self.failUnless(IATDocument.isImplementedBy(article))
+        self.failUnless(INonStructuralFolder.providedBy(article))
+        self.failUnless(IPloneArticle.providedBy(article))
+        self.failUnless(IATDocument.providedBy(article))
 
     def testVersionAtCreation(self):
         from Products.PloneArticle.version import CURRENT_ARTICLE_VERSION
         article = self.article
 
-        self.assertEquals(article.getPAVersion(), CURRENT_ARTICLE_VERSION) 
+        self.assertEquals(article.getPAVersion(), CURRENT_ARTICLE_VERSION)
 
     def testGetArticleObject(self):
         article = self.article
@@ -94,23 +94,23 @@ class PloneArticleTestCase(BaseTestCase):
     def testCopyArticle(self):
         self.loginAsPortalOwner()
         article = self.article
-        
+
         # Add image
         image = self.addContent("Image", self.portal, "image1")
-        
+
         # Reference this image to article
         data = [{
             'id': 'image1',
-            'title': ('Inner image', {}), 
+            'title': ('Inner image', {}),
             'referencedContent': (image.UID(), {})}]
         article.setImages(data)
-        
+
         # Copy article to new folder
         folder = self.addContent("Folder", self.portal, "folder")
         cb = self.portal.manage_copyObjects(ids=[article.getId()])
         folder.manage_pasteObjects(cb_copy_data=cb)
         article_copy = getattr(folder, article.getId())
-        
+
         # Get references of proxy image
         refs = [(x.targetUID, x.relationship)
                 for x in article.images.image1.getReferenceImpl()]
@@ -122,7 +122,7 @@ class PloneArticleTestCase(BaseTestCase):
         article = self.article
         self.loginAsPortalOwner()
         self.failIf(article.canSetDefaultPage())
-        
+
     def test_Description(self):
         article = self.article
         text = """This is a dummy text"""
@@ -132,11 +132,11 @@ class PloneArticleTestCase(BaseTestCase):
         mutator(text)
         accessor = field.getEditAccessor(self.article)
         self.assertEquals(accessor(), text)
-        
+
     def test_SearchableText(self):
-        """Test if article SearchableText method returns the correct value 
+        """Test if article SearchableText method returns the correct value
         for SearchableText index"""
-        
+
         article = self.article
         self.loginAsPortalOwner()
         article.setTitle('Article title')
@@ -153,8 +153,8 @@ class PloneArticleTestCase(BaseTestCase):
         value_list.sort()
         value = " ".join(value_list)
         self.assertEquals(value, expected_value)
-    
-        
+
+
 def test_suite():
     from unittest import TestSuite, makeSuite
     suite = TestSuite()

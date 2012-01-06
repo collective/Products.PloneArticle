@@ -215,8 +215,8 @@ pamodel.paplayer = {
         jQuery('#thumbsWrapper').css('border-color',pamodel.paplayer.player_color);
         jQuery('.playerButtons').css('border-color',pamodel.paplayer.player_color);
         jQuery('#thumbLegend').css('border-color',pamodel.paplayer.player_color);
-        jQuery('#thumbLegend').css('color',pamodel.paplayer.player_color);
-        jQuery('#imgDescription').css('color',pamodel.paplayer.player_color);
+        // jQuery('#thumbLegend').css('color',pamodel.paplayer.player_color);
+        // jQuery('#imgDescription').css('color',pamodel.paplayer.player_color);
 
         // vertical playerOrientation
         if (pamodel.paplayer.orientation == 'vertical') {

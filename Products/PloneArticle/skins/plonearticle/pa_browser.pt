@@ -12,6 +12,9 @@
                          b_size python:50;
                          b_start python:0;
                          b_start request/b_start | b_start;
+						 portal			 context/@@plone_portal_state/portal;
+						 here_url 		 context/absolute_url;
+						 portal_url 	 context/@@plone_portal_state/portal_url;
                          browsed_path    python:browsed_url[len(portal_url):];
                          browsed_path    python:'/'.join([x for x in browsed_path.split('/') if x]);
                          browsed_object  python:portal.restrictedTraverse(browsed_path);
@@ -19,6 +22,7 @@
                          typeCSS         python:test(typeView == 'image', 'float', 'list');
                          pa_tool         nocall: portal/plonearticle_tool;
                          field           python: here.getField(fieldName);
+						 putils			 portal/plone_utils;
                          proxy           python: field.getTemporaryInnerContent(here);
                          ref_types       python: proxy.getReferenceablePortalTypes(field);"
              i18n:domain="plonearticle">
@@ -92,7 +96,8 @@
                i18n:attributes="title">&nbsp;               
             </a>
             <span i18n:translate="you_are_here" i18n:domain="plone">You are here:</span>
-            <span>
+            <span
+				tal:define="isRTL context/@@plone_portal_state/is_rtl">
                 <a i18n:translate="tabs_home" i18n:domain="plone"
                    href="javascript: void(0);"
                    tal:attributes="onclick string:javascript:Browser.update('', '','','$replaceId','$replacePath', '${b_start}');; return false;">

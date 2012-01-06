@@ -18,7 +18,9 @@
             method="post"
             tal:attributes="action string:${here_url}/${template_id}"
             tal:define="view here/@@select_model_view;
-                        models view/getSelectableModels;">
+                        models view/getSelectableModels;
+                        here_url context/@@plone_context_state/object_url;
+                        template_id template/getId;">
 
         <input type="hidden" name="form.submitted" value="1"/>
         
@@ -47,20 +49,16 @@
 
         <div class="formControls">
           <input class="context"
-                 tabindex=""
                  type="submit"
                  name="form.button.Save"
                  value="Save"
                  i18n:attributes="value label_save;"
-                 tal:attributes="tabindex tabindex/next;"
                  />
           <input class="standalone"
-                 tabindex=""
                  type="submit"
                  name="form.button.Cancel"
                  value="Cancel"
                  i18n:attributes="value label_cancel;"
-                 tal:attributes="tabindex tabindex/next;"
                  />
         </div>
 

@@ -125,7 +125,7 @@ Proxy.saveForm = function(closeEditWindow) {
        type: 'POST',
        url: Article.url + '/processForm',
        data: formData,
-       complete: function() { 
+       complete: function() {
            if (closeEditWindow) Proxy.replaceModelView();
            else {
                Proxy.saveonblur();
@@ -211,7 +211,7 @@ Proxy.toggleFullDisplay = function(widget_id) {
 		jQuery(this).show();
     jQuery(this).next('span').remove();
 	});
-}  
+}
 
 };
 
@@ -249,7 +249,7 @@ Browser_init = function() {
       Browser.batch();
     });
   }
-	
+
 	Browser.maximize = function() {
 		Browser.maximized = true;
 		var size = {};
@@ -264,7 +264,7 @@ Browser_init = function() {
 		Browser.size(size);
 		window.scroll(0,size.top-30);
 	};
-	
+
 	Browser.selectItem = function (UID) {
 	    aUrl = Article.url + '/' + Browser.reference_script;
 	    jQuery('.statusBar > div', Browser.window).hide().filter('#msg-loading').show();
@@ -278,7 +278,7 @@ Browser_init = function() {
 	         	   jQuery('.statusBar > div', Browser.window).hide().filter('#msg-done').show();
                });
 	};
-	
+
     Browser.open = function(path, searchTerm, scope, replaceId, replacePath) {
         var aUrl = Article.url + '/pa_browser';
   	    var data = {
@@ -312,7 +312,7 @@ Browser_init = function() {
             Browser.batch();
         });
     };
-    
+
     Browser.maximized = true;
 };
 
@@ -345,7 +345,7 @@ Proxy.enablesaveonclick =  function() {
             Proxy.saveForm(true);
             return false;
             });
-    }    
+    }
 }
 
 Proxy.replaceModelView = function() {
@@ -354,7 +354,7 @@ Proxy.replaceModelView = function() {
     formData = {
                pamacro:  encodeURI(pamacro)
                };
-    aUrl = Article.url + '/pa_macro_wrapper';    
+    aUrl = Article.url + '/pa_macro_wrapper';
     jQuery('#kss-spinner').show();
     jQuery.post(aUrl, formData, function(html) {
   		    jQuery('#pacontent').html(html);
@@ -364,7 +364,7 @@ Proxy.replaceModelView = function() {
   		    jQuery(document).ready(TB_launch);
   		    jQuery(document).ready(activateCollapsibles);
           }
-          );               
+          );
 }
 
 
@@ -376,7 +376,7 @@ loadEditMacro = function(paedittemplate, fieldName) {
                paedittemplate:  paedittemplate,
                fieldName : fieldName
                };
-    aUrl =  context.absolute_url() + '/pa_editfield_wrapper';          
+    aUrl =  context.absolute_url() + '/pa_editfield_wrapper';
     jQuery.post(aUrl, formData, function(html) {
   		    jQuery('#kss-menu').html(html);
   		    jQuery(document).ready(function(){
@@ -385,7 +385,7 @@ loadEditMacro = function(paedittemplate, fieldName) {
                      Field_init(node);
            } );
           }
-          );	        
+          );
 }
 
 
@@ -452,9 +452,9 @@ Field_init = function(node) {
 			if (jQuery(this).attr('id')!= 'parent-fieldname-' + Proxy.field_name) {
          jQuery(this).hide();
       }
-		});		
+		});
 	// hide iplayer
-  // if (Proxy.field_name=='images') jQuery('#imagesPlayer').hide(); 
+  // if (Proxy.field_name=='images') jQuery('#imagesPlayer').hide();
 }
 
 
@@ -467,73 +467,10 @@ InitPloneArticleFormTabs = function () {
     jQuery('.pFieldname').each(
         function() {
             var fieldName = jQuery(this).val();
-            jQuery('#fieldsetlegend-' + fieldName).click(function() {Tabs_init(fieldName);return false;});            
+            jQuery('#fieldsetlegend-' + fieldName).click(function() {Tabs_init(fieldName);return false;});
         }
     );
 }
-
-
-// temp hack of stupid formTabs threshold for plone 3.0x
-buildTabs30X = function(container, legends) {
-    var threshold = 10;
-    var tab_ids = [];
-    var panel_ids = [];
-
-    for (var i=0; i<legends.length; i++) {
-        tab_ids[i] = legends[i].id;
-        panel_ids[i] = tab_ids[i].replace(/^fieldsetlegend-/, "fieldset-")
-    }
-
-    if (legends.length > threshold) {
-        var tabs = document.createElement("select");
-        tabs.onchange = ploneFormTabbing._toggleFactory(container, tab_ids, panel_ids);
-    } else {
-        var tabs = document.createElement("ul");
-    }
-    tabs.className = "formTabs";
-
-    for (var i=0; i<legends.length; i++) {
-        var legend = legends[i];
-        var parent = legend.parentNode;
-        if (legends.length > threshold) {
-            var tab = document.createElement("option");
-        } else {
-            var tab = document.createElement("li");
-        }
-        switch (i) {
-            case 0: {
-                tab.className = "formTab firstFormTab";
-                break;
-            }
-            case (legends.length-1): {
-                tab.className = "formTab lastFormTab";
-                break;
-            }
-            default: {
-                tab.className = "formTab";
-                break;
-            }
-        }
-        var text = document.createTextNode(getInnerTextFast(legend));
-        if (legends.length > threshold) {
-            tab.appendChild(text);
-            tab.id = legend.id;
-            tab.value = legend.id;
-        } else {
-            var a = document.createElement("a");
-            a.id = legend.id;
-            a.href = "#" + legend.id;
-            a.onclick = ploneFormTabbing._toggleFactory(container, tab_ids, panel_ids);
-            var span = document.createElement("span");
-            span.appendChild(text);
-            a.appendChild(span);
-            tab.appendChild(a);
-        }
-        tabs.appendChild(tab);
-        parent.removeChild(legend);
-    }
-    return tabs;
-};
 
 // temp hack of stupid formTabs threshold for plone 3.1
 buildTabs31X = function(container, legends) {
@@ -545,10 +482,11 @@ buildTabs31X = function(container, legends) {
         tab_ids[i] = '#' + this.id;
         panel_ids[i] = tab_ids[i].replace(/^#fieldsetlegend-/, "#fieldset-");
     });
-    var handler = ploneFormTabbing._toggleFactory(
-        container, tab_ids.join(','), panel_ids.join(','));
 
     if (legends.length > threshold) {
+        var handler = ploneFormTabbing._toggleFactory(
+            container, tab_ids.join(','), panel_ids.join(','));
+
         var tabs = document.createElement("select");
         var tabtype = 'option';
         jq(tabs).change(handler).addClass('noUnloadProtection');
@@ -579,28 +517,14 @@ buildTabs31X = function(container, legends) {
         tabs.appendChild(tab);
         jq(this).remove();
     });
-    
+
     jq(tabs).children(':first').addClass('firstFormTab');
     jq(tabs).children(':last').addClass('lastFormTab');
-    
+
     return tabs;
 };
 
 
 
+ploneFormTabbing._buildTabs = buildTabs31X ;
 
-
-if (typeof jq != "undefined") {
-    // patch plone method ploneFormTabbing._buildTabs
-    ploneFormTabbing._buildTabs = buildTabs31X ;
-    jQuery(document).ready(InitPloneArticleFormTabs);
-}
-else {
-    // patch plone method ploneFormTabbing._buildTabs
-    ploneFormTabbing._buildTabs = buildTabs30X ;
-    // this does not work with kupu+MSIE under plone3.0.x
-    //jQuery(document).ready(InitPloneArticleFormTabs);
-    registerPloneFunction(InitPloneArticleFormTabs);
-}    
-
-   

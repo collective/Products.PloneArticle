@@ -9,7 +9,6 @@
       directory="profiles/default"
       description="Profile for PloneArticle."
       provides="Products.GenericSetup.interfaces.EXTENSION"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      />
+  />
 
 </configure>

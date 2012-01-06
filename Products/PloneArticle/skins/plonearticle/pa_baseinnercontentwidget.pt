@@ -68,32 +68,34 @@
             <tal:block tal:define="objs python:accessor();
                                    widget_container_id string:${fieldName}-innercontent;
                                    widget_index_id string:${fieldName}-innercontent-index;
-                                   inner_content_macros inner_content_macros | here/pa_baseinnercontentwidget/macros;">
-  
+                                   inner_content_macros inner_content_macros | here/pa_baseinnercontentwidget/macros;
+                                   here_url context/absolute_url;
+                                   portal_url context/@@plone_portal_state/portal_url">
+
               <div id="articleActions"
                    tal:define="type type |string:content;
                                typeView typeView |string:content;">
-  
+
                 <a name="action"></a>
-                <input type="hidden" id="pa_unload_protection_flag" 
-                                     name="pa_unload_protection_flag" 
+                <input type="hidden" id="pa_unload_protection_flag"
+                                     name="pa_unload_protection_flag"
                                      tal:attributes="id string:pa_unload_protection_flag_${type}"
-                                     value="0" />              
-                <input type="hidden" class="article_url" name="article_url" 
-                       tal:attributes="value string:${here_url}" />                
-                <input type="hidden" class="browser_url" name="browser_url" 
-                       tal:attributes="value string:${portal_url}" />             
-                <input type="hidden" class="proxy_type" name="proxy_type" 
-                       tal:attributes="value string:${type}" />    
-                <input type="hidden" class="pFieldname" name="pFieldname" 
+                                     value="0" />
+                <input type="hidden" class="article_url" name="article_url"
+                       tal:attributes="value string:${here_url}" />
+                <input type="hidden" class="browser_url" name="browser_url"
+                       tal:attributes="value string:${portal_url}" />
+                <input type="hidden" class="proxy_type" name="proxy_type"
+                       tal:attributes="value string:${type}" />
+                <input type="hidden" class="pFieldname" name="pFieldname"
                        tal:attributes="value string:${fieldName}" />
-                <input type="hidden" class="pa_browser_reference_script" name="pa_browser_reference_script" 
+                <input type="hidden" class="pa_browser_reference_script" name="pa_browser_reference_script"
                        tal:attributes="value string:pa_inner${type}_reference" />
                 <a id="saveKss"
                    href=""
                    class="closeWindow">
                    &nbsp;
-                </a>   
+                </a>
                 <ul id="plone-article-menu">
                   <li id="plone-article-upload-menu">
                     <a class="thickbox" href=""
@@ -106,18 +108,18 @@
                   </li>
                   <li id="plone-article-browser-menu">
                     <a href="" id="plone-article-browse-link"
-                       tal:attributes="href string:${here_url}/${template_id}?fieldset=${fieldset};
+                       tal:attributes="href string:${here/absolute_url}/${template/id}?fieldset=${fieldset};
                                        onclick string:Browser.open(Browser.url, '','','','');; return false;">
                       <span
                           tal:replace="python:here.utranslate('label_browse_server_%s' % fieldName, default='Browse server %s' % fieldName, domain='plonearticle')">
                         Browse server files
                       </span>
                     </a>
-                  </li>              
+                  </li>
                 </ul>
-  
+
               </div>
-  
+
               <div class="innerContentWidgetContainer" id="proxyContainer"
                    tal:attributes="id string:proxyContainer_$type">
                  <div class="innerContentWidget closed emptyContainer"
@@ -141,12 +143,12 @@
                   </div>
                 </tal:block>
               </div>
-  
+
               <input type="hidden"
                      name="nb_proxy"
                      tal:attributes="id widget_index_id;
                                      value python:len(objs)" />
-  
+
             </tal:block>
           </metal:fill>
         </metal:use>
@@ -156,7 +158,7 @@
     <metal:define define-macro="search">
       <metal:use use-macro="here/widgets/file/macros/edit" />
     </metal:define>
-    
+
   </body>
 
 </html>

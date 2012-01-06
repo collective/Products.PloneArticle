@@ -170,7 +170,7 @@
             method="post" enctype="multipart/form-data"
          onsubmit="return Proxy.sendForm();"
             tal:define="target_upload_script target_upload_script | string:pa_innerimage_upload;"
-            tal:attributes="action string:${here_url}/${target_upload_script};">
+            tal:attributes="action string:${here/absolute_url}/${target_upload_script};">
 
         <input type="hidden" id="field_name" name="field_name" value="fieldName" tal:attributes="value fieldName;" />
 

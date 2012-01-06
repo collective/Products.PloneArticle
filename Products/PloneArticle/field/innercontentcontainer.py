@@ -23,6 +23,11 @@ $Id: innercontentcontainer.py 6977 2007-12-28 11:45:13Z b_mathieu $
 __docformat__ = 'restructuredtext'
 
 # Zope imports
+try:
+    from OFS.interfaces import IOrderedContainer
+except ImportError:
+    from Products.Archetypes.interfaces import IOrderedContainer
+
 from AccessControl import ClassSecurityInfo
 from zope.interface import implements
 
@@ -33,11 +38,13 @@ from Products.CMFCore.utils import getToolByName
 # Archetypes imports
 from Products.Archetypes.OrderedBaseFolder import OrderedContainer
 from Products.Archetypes.public import BaseFolderMixin, registerType, listTypes
-from Products.Archetypes.interfaces import IOrderedContainer
+
 
 # Other imports
 from Products.PloneArticle.interfaces import IInnerContentContainer, IBaseInnerContent
 from Products.PloneArticle.pafti import DynamicAllowedContentFTI
+
+from Products.PloneArticle.config import PROJECTNAME
 
 class InnerContentContainer(OrderedContainer, BaseFolderMixin):
     """This folder is a container of inner content objects"""
@@ -94,6 +101,8 @@ class InnerContentContainer(OrderedContainer, BaseFolderMixin):
         with moveObjectsByDelta(...)"""
 
         ttool = getToolByName(self, 'portal_types')
+
+        # FIXME: passing 'by_metatype' is deprecated but there's no replacement API
         cmf_meta_types = ttool.listContentTypes(by_metatype=1)
         cmf_types = ttool.listContentTypes()
         arch_meta_types = [t['meta_type'] for t in listTypes()]
@@ -107,6 +116,4 @@ class InnerContentContainer(OrderedContainer, BaseFolderMixin):
         We have no tag/keyword"""
         return ()
 
-
-
-registerType(InnerContentContainer)
+registerType(InnerContentContainer, PROJECTNAME)

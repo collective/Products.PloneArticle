@@ -10,11 +10,14 @@
 
     <metal:block define-macro="header"
                  tal:define="plone_view plone_view|nothing;
-                             parent_folder plone_view/getCurrentFolder | python:test(here.is_folderish(), here, here.aq_inner.getParentNode());
+                             is_folderish here/isPrincipiaFolderish|nothing;
+                             parent_folder plone_view/getCurrentFolder | python:test(is_folderish, here, here.aq_inner.getParentNode());
                              multipage parent_folder/@@multipage_view;
                              is_multipage multipage/isMultipage;
                              kssClassesView context/@@kss_field_decorator_view;
-                             getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;">
+                             getKssClasses nocall:kssClassesView/getKssClassesInlineEditable;
+                             portal context/@@plone_portal_state/portal;
+                             portal_url portal/absolute_url;">
 
       <tal:block define="global mimetypes  nocall:portal/mimetypes_registry;" />
 
@@ -24,11 +27,7 @@
 
         <h1 tal:content="parent_folder/title_or_id">Multipage Title</h1>
 
-        <tal:multipage_byline tal:define="here nocall:parent_folder;">
-          <div metal:use-macro="parent_folder/document_byline/macros/byline">
-            Get the byline - contains details about author and modification date.
-          </div>
-        </tal:multipage_byline>
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
 
         <div class="topNavigation"
              tal:define="toc_menu_items python:multipage.getTOCItems(here);"
@@ -64,19 +63,19 @@
       </tal:h1>
 
       <div tal:replace="structure provider:plone.belowcontenttitle" />
-      
+
       <input type="hidden"
              name="absolute_url"
              id ="absolute_url"
              tal:attributes="value here/absolute_url" />
-             
+
       <input type="hidden"
              name="portal_url"
              id ="portal_url"
-             tal:attributes="value portal_url" />             
-      
+             tal:attributes="value portal_url" />
+
       <metal:block use-macro="here/pa_model_macros/macros/kss-menu" />
-      
+
     </metal:block>
 
     <metal:block define-macro="description"
@@ -104,13 +103,13 @@
 
 
     </metal:block>
-    
-    <metal:block define-macro="kss-menu">  
-          <ul tal:condition="python:checkPermission('Modify portal content', here)"
+
+    <metal:block define-macro="kss-menu">
+          <ul tal:condition="python:here.portal_membership.checkPermission('Modify portal content', here)"
               id="kss-menu">
             <tal:block repeat="fieldName python:['images', 'files', 'links']">
                 <li tal:attributes="id string:parent-fieldname-$fieldName"
-                    class="jqInlineEditable">            
+                    class="jqInlineEditable">
                     <a class="kss-menu-text"
                        href="#"
                        tal:content="python:here.utranslate('label_manage_%s' % fieldName, default='Manage %s' % fieldName, domain='plonearticle')">
@@ -118,12 +117,12 @@
                     </a>
                     <input type="hidden"
                            class="jq-fieldname"
-                           tal:attributes="value fieldName" />     
+                           tal:attributes="value fieldName" />
                     <input type="hidden"
                            class="jq-edit-template"
-                           tal:attributes="value python:'pa_%sinnercontentwidget' %fieldName.rstrip('s')" />                      
-                </li>              
-            </tal:block>    
+                           tal:attributes="value python:'pa_%sinnercontentwidget' %fieldName.rstrip('s')" />
+                </li>
+            </tal:block>
           </ul>
           <div class="visualClear">
             <!-- clear left block only -->
@@ -201,7 +200,9 @@
                          file_size python:not isAttach and here.getObjSize(proxy, size=proxy.getReferencedContent().get_size()) or file_size;
                          s_t python:(is_search and has_preview and fileField.getIndexableValue(proxy)) or '';
                          has_search python:is_search and has_preview and modules['string'].find(s_t, request.searchterm) >= 0;
-                         klass python:test(has_search, 'highlightedSearchTerm', '')">
+                         klass python:test(has_search, 'highlightedSearchTerm', '');
+                         portal context/@@plone_portal_state/portal;
+                         portal_url portal/absolute_url;">
           <a tal:attributes="href string:${file_url};
                              title file_description">
             <img tal:attributes="src string:${portal_url}/${icon}" />
@@ -234,27 +235,30 @@
             <span class="discreet"
                   tal:content="file_description">Description</span>
           </div>
- 
+
         </div>
-      </tal:block>  
+      </tal:block>
     </metal:block>
 
     <metal:block define-macro="link">
       <div class="link block"
            tal:define="url python:proxy.getRemoteUrl();
+                       portal context/@@plone_portal_state/portal;
+                       portal_url portal/absolute_url;
                        link_description proxy/Description | python:'';
                        link_icon string:$portal_url/${proxy/getLinkIcon};
-                       title python: proxy.Title() or url;">
+                       title python: proxy.Title() or url;
+                       ">
 
         <a tal:attributes="href url;
                            title link_description"
            class="link-plain">
           <img tal:attributes="src link_icon;
-                               alt link_description" />    
+                               alt link_description" />
         </a>
         <a tal:attributes="href url;
                            title link_description"
-           class="link-plain">                      
+           class="link-plain">
           <span tal:content="title" />
         </a>
         <div class="proxy-description"
@@ -310,7 +314,7 @@
              tal:condition="image_description">
           <span class="discreet"
                 tal:content="image_description">Description</span>
-        </div>        
+        </div>
       </div>
     </metal:block>
 
@@ -345,7 +349,9 @@
     </metal:block>
 
     <metal:block define-macro="small_square"
-                 tal:define="image_url python:view.getImageUrl(proxy)">
+                 tal:define="image_url python:view.getImageUrl(proxy);
+                             portal context/@@plone_portal_state/portal;
+                             portal_url portal/absolute_url;">
       <div style="width: 50px; height:50px; overflow: hidden">
         <a class="thickbox"
            target="_blank"
@@ -470,7 +476,8 @@
 
     <metal:block define-macro="footer"
                  tal:define="plone_view plone_view|nothing;
-                             parent_folder plone_view/getCurrentFolder | python:test(here.is_folderish(), here, here.aq_inner.getParentNode());
+                             is_folderish here/isPrincipiaFolderish|nothing;
+                             parent_folder plone_view/getCurrentFolder | python:test(is_folderish, here, here.aq_inner.getParentNode());
                              multipage parent_folder/@@multipage_view;
                              is_multipage multipage/isMultipage;">
 

@@ -29,7 +29,9 @@
 
     <metal:inner_content define-macro="inner_content">
 
-      <tal:proxy define="file_id proxy/getId;
+      <tal:proxy define="portal context/@@plone_portal_state/portal;
+												 portal_url context/@@plone_portal_state/portal_url;
+												 file_id proxy/getId;
                          title proxy/Title;
                          remote_url proxy/getRemoteUrl;
                          referenced proxy/getReferencedContent;
@@ -150,7 +152,7 @@
     <form id="frmUpload" action="" target="frmUploadWorker"
          onsubmit="return Proxy.sendForm();"
          method="post" enctype="multipart/form-data"
-         tal:attributes="action string:${here_url}/pa_innerlink_upload;">
+         tal:attributes="action string:${here/absolute_url}/pa_innerlink_upload;">
 
       <input type="hidden" id="field_name" name="field_name" value="fieldName" tal:attributes="value fieldName;" />
 

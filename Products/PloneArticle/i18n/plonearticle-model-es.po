@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PloneArticle v4\n"
+"POT-Creation-Date: 2006-08-25 13:49+0000\n"
+"PO-Revision-Date: 2010-05-11 20:44+0200\n"
+"Last-Translator: Pablo Caro <correo@pablocaro.es>\n"
+"Language-Team: Español\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: es\n"
+"Language-Name: Español\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: plonearticle-model\n"
+
+msgid "untitled_model"
+msgstr "modelo sin título"
+
+msgid "no_description_available"
+msgstr "no existe descripción disponible"
+
+msgid "model1_title"
+msgstr "Documentación"
+
+msgid "model1_description"
+msgstr "Las imágenes de muestran a la derecha y los adjuntos en el pie del documento. Esta es una composición simple usada para documentación por ejemplo."
+
+msgid "model2_title"
+msgstr "Periódico"
+
+msgid "model2_description"
+msgstr "La primera imagen se muestra en la cabecera, el resto a la derecha, los adjuntos al pie de la página. Esta es una composición simple que se puede usar para artículos creados por usuarios finales."
+
+msgid "model3_title"
+msgstr "Imágenes pequeñas"
+
+msgid "model3_description"
+msgstr "Imágenes reducidas que se sitúan tras la descripción y el texto."
+
+msgid "model4_title"
+msgstr "Imágenes grandes"
+
+msgid "model4_description"
+msgstr "Imágenes en el cuerpo del artículo"
+
+msgid "model5_title"
+msgstr "Imágenes pequeñas, separadas por texto"
+
+msgid "model5_description"
+msgstr "Las dos primeras imágenes en versión reducida se muestran tras la descripción. Luego viene el cuerpo del artículo. El resto de imágenes se colocan después en líneas de a dos."
+
+msgid "model6_title"
+msgstr "Imágenes grandes, separadas por texto"
+
+msgid "model6_description"
+msgstr "La primera imagen se muestra grande y al principio. El resto después del cuerpo."
+
+msgid "model7_title"
+msgstr "Una imagen grande y el resto pequeñas"
+
+msgid "model7_description"
+msgstr "La primera imagen se muestra grande y seguida por el cuerpo del artículo. Todas las demás se muestran en versión reducida al final."
+
+msgid "model8_title"
+msgstr "Una imagen grande, imágenes pequeñas a los laterales"
+
+msgid "model8_description"
+msgstr "La primera imagen se muestra en su tamaño original seguida por el cuerpo del artículo. Todas las demás se muestran en versión reducida al final. Los adjuntos se muestran en el lateral izquierdo."
+
+msgid "model9_title"
+msgstr "Imágenes, adjuntos y enlaces al pie del artículo."
+
+msgid "model9_description"
+msgstr "Todas las Imágenes en forma de miniaturas, adjuntos y enlaces se muestran al pie del artículo."
+
+msgid "model10_title"
+msgstr ""
+
+msgid "model10_description"
+msgstr "Las cuatro primeras imágenes se muestran a la izquierda y recortadas en un cuadrado de 50x50px. La primera imagen es dimensionada 250x250px. El resto se muestran al final como iconos."
+
+

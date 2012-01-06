@@ -19,11 +19,23 @@
          tal:define="models here/listModels;
                      article_types here/listArticleImplementers">
 
-      <div class="portalMessage"
-           tal:condition="not:here/useAttachmentField"
-           i18n:translate="message_attachment_field_installation">
-        Currently you only use FileField. To enable more features (search in attachment, preview, ...), install AttachmentField product.
+      <div i18n:translate="dd_attachments_management">
+        Like the previous panel, you can choose here the content types
+        of the attachments that will be linked by an article.
+        You can choose the maximum size of the uploaded file.
+        You can also activate the preview mode of attachmentField (if
+        it is present).
       </div>
+
+      <dl class="portalMessage info"
+           tal:condition="not:here/useAttachmentField">
+        <dt i18n:translate="">                                                                               
+                INFO                                                                                            
+        </dt>                                                                                                
+        <dd i18n:translate="message_attachment_field_installation">                                                                               
+          Currently you only use FileField. To enable more features (search in attachment, preview, ...), install AttachmentField product.
+        </dd>      
+      </dl>
 
       <form method="post"
             tal:define="errors options/state/getErrors;"
@@ -103,13 +115,11 @@
         </fieldset>
 
         <input class="context"
-               tabindex=""
                type="submit"
                name="form.button.index_save"
                value="Save"
                i18n:domain="plone"
                i18n:attributes="value label_save;"
-               tal:attributes="tabindex tabindex/next;"
                />
 
       </form>

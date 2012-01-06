@@ -20,13 +20,13 @@ import transaction
 import itertools
 
 # Zope imports
-from Globals import InitializeClass
 from AccessControl import ClassSecurityInfo
 from OFS.SimpleItem import SimpleItem
 
 from Products.CMFCore.utils import getToolByName
 
 from Products.PloneArticle import tool, content
+from Products.PloneArticle.pafti import InitializeClass
 
 
 # Module aliases needed for migration

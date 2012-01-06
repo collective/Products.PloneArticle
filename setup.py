@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
+
 def _textFromPath(*names):
     here = os.path.dirname(os.path.abspath(__file__))
     path = os.path.join(here, *names)
@@ -21,6 +22,9 @@ setup(name='Products.PloneArticle',
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
           "Framework :: Plone",
+          "Framework :: Plone :: 3.3",
+          "Framework :: Plone :: 4.0",
+          "Framework :: Plone :: 4.1",
           "Programming Language :: Python",
           "Topic :: Software Development :: Libraries :: Python Modules",
           ],

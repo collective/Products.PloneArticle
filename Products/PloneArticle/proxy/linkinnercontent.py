@@ -33,14 +33,20 @@ from Products.Archetypes.public import StringField, StringWidget, registerType,\
      Schema, ReferenceField, ComputedField, ComputedWidget
 
 # Products imports
-from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
-    ReferenceBrowserWidget
+try:
+    # BBB: try to be as compatible as possible ...
+    from archetypes.referencebrowserwidget import ReferenceBrowserWidget
+except:
+    # this is marked as deprecated in plone 5.0
+    from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
+        ReferenceBrowserWidget
 
 from Products.ATContentTypes.interface import IATLink, IATContentType
 
 from Products.PloneArticle.proxy import BaseInnerContentProxy, \
     BaseInnerContentProxySchema
 from Products.PloneArticle.interfaces import ILinkInnerContentProxy
+from Products.PloneArticle.config import PROJECTNAME
 
 # Defines schema
 LinkInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
@@ -123,9 +129,9 @@ class LinkInnerContentProxy(BaseInnerContentProxy):
         if attachField.get_size(self) > 0 :
             return 'link_icon.gif'
         elif self.getReferencedContent() is not None :
-            return self.getReferencedContent().getIcon(True)    
-        return self.getIcon(True)    
+            return self.getReferencedContent().getIcon(True)
+        return self.getIcon(True)
 
 
 
-registerType(LinkInnerContentProxy)
+registerType(LinkInnerContentProxy, PROJECTNAME)

@@ -2,8 +2,11 @@
            xmlns:five="http://namespaces.zope.org/five"
            xmlns:browser="http://namespaces.zope.org/browser">
   
-  <five:traversable class="Products.PloneArticle.content.PloneArticle" />    
+  <!--
+No longer needed for Plone 4
+  <five:traversable class="Products.PloneArticle.content.PloneArticle" />
   <five:traversable class="Products.PloneArticle.content.PloneArticleMultiPage" />    
+-->
 
   <!-- MultiPage views -->
   <!-- browser:page

@@ -45,7 +45,7 @@ except ImportError:
 from Products.ATContentTypes.content.document import ATDocument, \
      ATDocumentSchema
 
-from Products.PloneArticle.config import PLONEARTICLE_TOOL
+from Products.PloneArticle.config import PLONEARTICLE_TOOL, PROJECTNAME
 
 from Products.PloneArticle.interfaces import IPloneArticle
 from Products.PloneArticle.field import FileInnerContentField, \
@@ -102,6 +102,13 @@ PloneArticleSchema.moveField('links', after='images')
 
 _marker = []
 
+article__implements__ = ()
+try:
+    #Plone 4 ATContentTypes no longer uses __implements__
+    article__implements__ = ATDocument.__implements__
+except:
+    pass
+
 class PloneArticle(ArticleMixin, ATDocument):
     """A rich document containing files, images, links"""
 
@@ -109,7 +116,7 @@ class PloneArticle(ArticleMixin, ATDocument):
 
     # FIXME: We need to add this Zope 2 interface because the Archetypes tool
     # doesn't care about Zope 3 interfaces. Feature or bug?
-    __implements__ = ATDocument.__implements__
+    __implements__ = article__implements__
 
     # Standard content type setup
     schema = PloneArticleSchema
@@ -220,4 +227,4 @@ class PloneArticle(ArticleMixin, ATDocument):
     
             self.reindexObject()        
 
-registerType(PloneArticle)
+registerType(PloneArticle, PROJECTNAME)

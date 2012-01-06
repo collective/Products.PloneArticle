@@ -1,16 +1,34 @@
 PloneArticle Changes
 ====================
 
-4.1.11 - unreleased
--------------------
+4.2.0 (unreleased)
+------------------
+
+* Smart field allowed criteria changed since Plone 4.0, due to catalog changes [glenfant]
+
+* The "Large Plone Folder" is gone in Plone 4 so it can't be a target of a
+  reference [glenfant]
+
+* Fixed the test request such it acts (partially) like a mapping [glenfant]
+
+* Replaced deprecated "isImplementedBy" with "providedBy" everywhere [glenfant]
+
+* Archetypes tool stopped providing getObject(uuid) method, using reference_catalog
+  instead [glenfant]
+
+* Resync plone4 branch with trunk [kiorky]
+
+* Fix setupKupu if resources are not there, just warn [kiorky]
+
+* Fixed widget templates for Plone 4 [tdesvenain]
 
 * fixed plonearticle_tool pickling error when installing in a fresh
   plone 3.3.6 the first time
   [petschki]
 
 
-4.1.10 (svn)
-------------
+4.1.10
+------
 
 * Added upgrade script 4.1.9 -> 4.1.10
   [glenfant]
@@ -22,6 +40,10 @@ PloneArticle Changes
 * Commented out isinstance checks in fileinnercontentproxy and
   imageinnercontentproxy. they break functionality when plone.app.blob is used.
   [rnix]
+
+* Updated registerType calls for Plone 4 support [vangheem]
+
+* Updated page templates for Plone 4 support [vangheem] [tdesvenain]
 
 * Remove duplicate attributes in pa_model_macros.pt: chameleon don't like that.
   [kdeldycke] 2010-04-14
