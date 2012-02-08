@@ -48,7 +48,20 @@ from Products.PloneArticle.config import PROJECTNAME
 def lowcase_cmp(s1, s2):
     return cmp(s1.lower(), s2.lower())
 
-if PLONE40:
+try:
+    import plone.app.discussion
+    PLONE41 = 1
+except ImportError:
+    PLONE41 = 0
+
+if PLONE41:
+    ALL_ALLOWED_CRITERIAS = (
+        'allowedRolesAndUsers', 'cmf_uid', 'commentators', 'Creator', 'getId', 'getRawRelatedItems',
+        'id', 'in_reply_to', 'is_default_page', 'is_folderish', 'meta_type',
+        'object_provides', 'path', 'portal_type', 'review_state', 'SearchableText',
+        'sortable_title', 'Subject', 'total_comments', 'Type', 'UID'
+        )
+elif PLONE40:
     ALL_ALLOWED_CRITERIAS = (
         'allowedRolesAndUsers', 'cmf_uid', 'Creator', 'getId', 'getRawRelatedItems',
         'id', 'in_reply_to', 'is_default_page', 'is_folderish', 'meta_type',
@@ -167,12 +180,17 @@ class SmartListFieldTestCase(BaseTestCase):
         # identity
         field.setSearchCriterias(dummy, empty_search)
         field_search = field.getSearchCriterias(dummy)
+        empty_search['portal_type'] = tuple(sorted(empty_search['portal_type']))
+        field_search['portal_type'] = tuple(sorted(field_search['portal_type']))
         self.failIf(empty_search != field_search)
 
         # invalid search keys must be discarded
         # we need to copy dict, mutator will change it
-        field.setSearchCriterias(dummy, invalid_search.copy())
+        invalid_search_copy = invalid_search.copy()
+        field.setSearchCriterias(dummy, invalid_search_copy)
+        invalid_search_copy['portal_type'] = tuple(sorted(invalid_search_copy['portal_type']))
         field_search = field.getSearchCriterias(dummy)
+        field_search['portal_type'] = tuple(sorted(field_search['portal_type']))
         self.failIf(field_search == invalid_search)
         self.failIf(field_search != empty_search)
 
