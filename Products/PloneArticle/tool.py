@@ -26,7 +26,9 @@ from types import StringType, ListType, TupleType
 import re
 from cgi import escape
 
+
 # Zope imports
+from zope import interface
 import transaction
 from ZODB.POSException import ConflictError
 from AccessControl import ClassSecurityInfo
@@ -81,6 +83,27 @@ _upgradePaths = {}
 def registerUpgradePath(oldversion, newversion, function):
     """ Basic register func """
     _upgradePaths[oldversion.lower()] = [newversion.lower(), function]
+
+
+
+def check_is_image(img):
+    """ Check image class
+    """
+    try:
+        # first try blob Images
+        from plone.app.blob.interfaces import IBlobWrapper
+        from plone.app.imaging.interfaces import IBaseObject
+        checked = False
+        if IBaseObject.providedBy(img) or IBlobWrapper.providedBy(img):
+            checked = True
+        if not checked:
+            raise
+    except:
+        # try to see if it is an old OFS.image
+        if not isinstance(img, Image):
+            raise ValueError(
+                'This is not a plone Image.')
+    
 
 
 class PloneArticleTool(UniqueObject, SimpleItem):
@@ -331,8 +354,7 @@ class PloneArticleTool(UniqueObject, SimpleItem):
             return ''
 
         # Check image class
-        if not isinstance(img, Image):
-            raise ValueError, 'Scale can only be applied on Image'
+        check_is_image(img)
 
         # Get scale size
         width = kwargs.get('width', img.width)
@@ -420,8 +442,7 @@ class PloneArticleTool(UniqueObject, SimpleItem):
             return ''
 
         # Check image
-        if not isinstance(img, Image):
-            raise ValueError, 'Scale can only be applied on Image'
+        check_is_image(img)
 
         if not HAS_PIL:
             return img
