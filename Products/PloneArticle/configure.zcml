@@ -11,5 +11,6 @@
   <include file="browser.zcml"/>
   <include file="deprecated.zcml"/>
   <include file="events.zcml"/>
+  <!--include file="extender.zcml"/-->
 
 </configure>
