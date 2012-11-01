@@ -120,8 +120,9 @@ class FileInnerContentProxy(BaseFileContentProxy):
         filename = data.filename
         content_type = data.getContentType()
 
-        if not isinstance(data, BlobWrapper):
-            return ''
+        #nelle nuove versioni è stato tolto per i blob
+        #if not isinstance(data, BlobWrapper):
+        #    return ''
 
         if content_type.startswith('text/'):
             return data
@@ -136,21 +137,22 @@ class FileInnerContentProxy(BaseFileContentProxy):
             'attachment; filename="%s"' % filename or self.getId())
             return data.index_html(REQUEST, RESPONSE)
         else:
-            RESPONSE.setHeader('Last-Modified', rfc1123_date(self._p_mtime))
-            RESPONSE.setHeader('Content-Type', content_type)
-            RESPONSE.setHeader('Accept-Ranges', 'bytes')
-            if handleIfModifiedSince(self, REQUEST, RESPONSE):
-                return ''
-            RESPONSE.setHeader('Content-Length', data.get_size())
-            if filename is not None:
-                filename = IUserPreferredFileNameNormalizer(REQUEST).normalize(
-                    unicode(filename, self.getCharset()))
-                header_value = contentDispositionHeader(
-                    disposition='attachment',
-                    filename=filename)
-                RESPONSE.setHeader("Content-disposition", header_value)
-            range = handleRequestRange(self, data.get_size(), REQUEST, RESPONSE)
-            return data.getIterator(**range)
+            return att_field.index_html(self, REQUEST, RESPONSE)
+            # RESPONSE.setHeader('Last-Modified', rfc1123_date(self._p_mtime))
+            # RESPONSE.setHeader('Content-Type', content_type)
+            # RESPONSE.setHeader('Accept-Ranges', 'bytes')
+            # if handleIfModifiedSince(self, REQUEST, RESPONSE):
+            #     return ''
+            # RESPONSE.setHeader('Content-Length', data.get_size())
+            # if filename is not None:
+            #     filename = IUserPreferredFileNameNormalizer(REQUEST).normalize(
+            #         unicode(filename, self.getCharset()))
+            #     header_value = contentDispositionHeader(
+            #         disposition='attachment',
+            #         filename=filename)
+            #     RESPONSE.setHeader("Content-disposition", header_value)
+            # range = handleRequestRange(self, data.get_size(), REQUEST, RESPONSE)
+            # return data.getIterator(**range)
 
     def setAttachedFile(self, value, **kwargs):
         """
