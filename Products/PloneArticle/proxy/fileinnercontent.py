@@ -23,36 +23,35 @@ __docformat__ = 'restructuredtext'
 
 # Zope imports
 from AccessControl import ClassSecurityInfo
-from OFS.Image import File
 from zope.interface import implements
 
 # CMF imports
 from Products.CMFCore import permissions as CCP
 
 # Archetypes imports
-from Products.Archetypes.public import StringField, \
-    TextAreaWidget, registerType, Schema, ReferenceField, ComputedField, \
-    ComputedWidget
+from Products.Archetypes.public import (registerType,
+                                        Schema,
+                                        ReferenceField,
+                                        ComputedField,
+                                        ComputedWidget)
 
 # Products imports
 from Products.ATReferenceBrowserWidget.ATReferenceBrowserWidget import \
     ReferenceBrowserWidget
 
 from Products.ATContentTypes.interface import IFileContent
-from Products.PloneArticle.proxy import BaseFileContentProxy, \
-     BaseInnerContentProxySchema
+from Products.PloneArticle.proxy import (BaseFileContentProxy,
+                                         BaseInnerContentProxySchema)
 from Products.PloneArticle.interfaces import IFileInnerContentProxy
 
-# Use AttachmentField product if found otherwise use standard FileField
-try:
-    from Products.AttachmentField.AttachmentField import AttachmentField \
-        as ProxyFileField
-    from Products.AttachmentField.AttachmentWidget import AttachmentWidget \
-        as ProxyFileWidget
-except:
-    from Products.Archetypes.public import FileField as ProxyFileField
-    from Products.Archetypes.public import FileWidget as ProxyFileWidget
-    
+from Products.Archetypes.public import FileWidget  # , FileField
+from plone.app.blob.field import FileField, BlobWrapper
+#import usefull to download blob file
+from webdav.common import rfc1123_date
+from plone.app.blob.download import handleIfModifiedSince, handleRequestRange
+from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
+from Products.Archetypes.utils import contentDispositionHeader
+
 # Defines schema
 FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
     ComputedField(
@@ -74,12 +73,12 @@ FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
             label_msgid='label_referenced_file',
             i18n_domain='plonearticle',
             ),
-        ),    
-    ProxyFileField(
+        ),
+    FileField(
         'attachedFile',
         attached_content=True,
         searchable=True,
-        widget=ProxyFileWidget(
+        widget=FileWidget(
             label='Attached file',
             label_msgid='label_attached_file',
             i18n_domain='plonearticle',
@@ -87,29 +86,29 @@ FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
         ),
     ))
 
+
 class FileInnerContentProxy(BaseFileContentProxy):
-    """Proxy implementing IFileContent. It means this proxy has a getFile 
+    """Proxy implementing IFileContent. It means this proxy has a getFile
     method.
-    
+
     getFile returns attached file by default if existing otherwise returns
     the referenced content.
     """
-    
-    implements(IFileInnerContentProxy)    
+
+    implements(IFileInnerContentProxy)
     security = ClassSecurityInfo()
 
     schema = FileInnerContentProxySchema
 
     # You can only reference content implementing IFileContent interface
     referenceable_interfaces = (IFileContent,)
-    
+
     security.declareProtected(CCP.View, 'index_html')
     def index_html(self, REQUEST=None, RESPONSE=None):
         """Make it directly viewable when entering the objects URL.
-        
+
         We have to reproduce it to keep the same behaviour as usual for files.
         """
-        
         if REQUEST is None:
             REQUEST = self.REQUEST
         if RESPONSE is None:
@@ -117,18 +116,42 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field = self.getPrimaryField()
         accessor = field.getAccessor(self)
         data = accessor()
-        
-        if not isinstance(data, File):
+
+        filename = data.filename
+        content_type = data.getContentType()
+
+        if not isinstance(data, BlobWrapper):
             return ''
-        
-        if data.getContentType().startswith('text/'): 
+
+        if content_type.startswith('text/'):
             return data
 
-        RESPONSE.setHeader(
+        att_field = self.getField('attachedFile')
+        #little bit tricky: if we are using reference field, fallback to
+        # defautl code, other case, we need to handle the blob file. The code in
+        # the else branch is taken directly from plone.app.blob.field.py
+        if not att_field.get_size(self) > 0:
+            RESPONSE.setHeader(
             'Content-Disposition',
-            'attachment; filename="%s"' % data.filename or self.getId())
-        return data.index_html(REQUEST, RESPONSE)
-    
+            'attachment; filename="%s"' % filename or self.getId())
+            return data.index_html(REQUEST, RESPONSE)
+        else:
+            RESPONSE.setHeader('Last-Modified', rfc1123_date(self._p_mtime))
+            RESPONSE.setHeader('Content-Type', content_type)
+            RESPONSE.setHeader('Accept-Ranges', 'bytes')
+            if handleIfModifiedSince(self, REQUEST, RESPONSE):
+                return ''
+            RESPONSE.setHeader('Content-Length', data.get_size())
+            if filename is not None:
+                filename = IUserPreferredFileNameNormalizer(REQUEST).normalize(
+                    unicode(filename, self.getCharset()))
+                header_value = contentDispositionHeader(
+                    disposition='attachment',
+                    filename=filename)
+                RESPONSE.setHeader("Content-disposition", header_value)
+            range = handleRequestRange(self, data.get_size(), REQUEST, RESPONSE)
+            return data.getIterator(**range)
+
     def setAttachedFile(self, value, **kwargs):
         """
         Rename proxy according to file name
@@ -136,5 +159,5 @@ class FileInnerContentProxy(BaseFileContentProxy):
         field = self.getField('attachedFile')
         field.set(self, value, **kwargs)
         self.renameFromFileName(field)
-    
+
 registerType(FileInnerContentProxy)
