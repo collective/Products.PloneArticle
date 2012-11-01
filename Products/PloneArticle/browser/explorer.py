@@ -74,52 +74,60 @@ class ExplorerView(BrowserView):
         if self.isArticle:
             return []
         if self.searchTerm:
-            return []    
+            return []
         return self.queryMethod[0]({'path': self.path,
                                     'is_folderish': True})
-    
+
     def getReferenceableContent(self):
         pa_tool = getToolByName(self.context, TOOL_ID)
-        field = self.article.getField(self.field_name)        
+        field = self.article.getField(self.field_name)
         proxy = field.getTemporaryInnerContent(self.article)
         ref_types = proxy.getReferenceablePortalTypes(field)
         results = self.queryMethod[0]({'path': self.path,
                                        'portal_type': ref_types,
-                                       'SearchableText': self.searchTerm })
+                                       'SearchableText': self.searchTerm})
         return results
 
     def isImage(self, obj):
         return IImageContent.providedBy(obj)
 
-
-    def getOrientationFor(self, image_obj):        
+    # change next two method according to some patch found on google
+    # do that because of blob support
+    def getOrientationFor(self, image_obj):
 
         field = image_obj.getField('image')
-        im_width, im_height = field.getSize(image_obj)
-        height = width = 0
+        size = field.getSize(image_obj)
+        if size is not None and type(size) == type(()):
+            im_width, im_height = size
+        else:
+            im_width = im_height = 0
 
         if im_height >= im_width:
             return 'portrait'
 
         return 'landscape'
-                                       
+
     #FIXME: return an HTML tag is sooooo ugly
     def getThumbNailTagFor(self, image_obj):
-        
+
         title = image_obj.title_or_id()
         pa_tool = getToolByName(self.context, TOOL_ID)
 
         # compute thumbnail
         field = image_obj.getField('image')
-        im_width, im_height = field.getSize(image_obj)
+        size = field.getSize(image_obj)
+        if size is not None and type(size) == type(()):
+            im_width, im_height = size
+        else:
+            im_width = im_height = 0
         tag_size = 0
 
         if im_height >= im_width:
             tag_size = 100
         else:
-            tag_size = int(70 * im_width / im_height)    
-            
+            tag_size = int(70 * im_width / im_height)
+
         return pa_tool.getThumbnailTag(image_obj, 'image',
                                        maximizeTo=tag_size,
                                        title='Select %s' % title,
-                                       alt='Select %s' % title)                                       
+                                       alt='Select %s' % title)

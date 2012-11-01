@@ -315,6 +315,11 @@ class PloneArticleTool(UniqueObject, SimpleItem):
                 pti[field_name] = ct
         return
 
+    security.declarePublic('isBlobInstalled')
+    def isBlobInstalled(self):
+        quickinstaller = getToolByName(self, 'portal_quickinstaller')
+        return quickinstaller.isProductInstalled('plone.app.blob')
+
     security.declarePublic('getThumbnailTag')
     def getThumbnailTag(self, instance, field_name, **kwargs):
         """Generate an html img tag like OFS.Image but use specific thumb url"""
@@ -332,7 +337,8 @@ class PloneArticleTool(UniqueObject, SimpleItem):
 
         # Check image class
         if not isinstance(img, Image):
-            raise ValueError, 'Scale can only be applied on Image'
+            if self.isBlobInstalled() and not ('image' in img.getContentType()):
+                raise ValueError, 'Scale can only be applied on Image'
 
         # Get scale size
         width = kwargs.get('width', img.width)
@@ -421,7 +427,8 @@ class PloneArticleTool(UniqueObject, SimpleItem):
 
         # Check image
         if not isinstance(img, Image):
-            raise ValueError, 'Scale can only be applied on Image'
+            if self.isBlobInstalled() and not ('image' in img.getContentType()):
+                raise ValueError, 'Scale can only be applied on Image'
 
         if not HAS_PIL:
             return img
