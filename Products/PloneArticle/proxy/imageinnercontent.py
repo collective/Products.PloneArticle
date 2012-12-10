@@ -120,39 +120,6 @@ class ImageInnerContentProxy(BaseFileContentProxy):
         else:
             return att_field.index_html(self, REQUEST, RESPONSE)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     security.declareProtected(CCP.View, 'tag')
     def tag(self, **kwargs):
         """Use proxy title for img tags: title and alt"""
@@ -160,7 +127,6 @@ class ImageInnerContentProxy(BaseFileContentProxy):
         # Scale image
         patool = getToolByName(self, PLONEARTICLE_TOOL)
         return patool.getThumbnailTag(self, 'image', **kwargs)
-
 
     def setAttachedImage(self, value, **kwargs):
         """
