@@ -49,15 +49,13 @@ from Products.PloneArticle.interfaces import IFileInnerContentProxy
 
 from Products.PloneArticle.config import PROJECTNAME
 
-# Use AttachmentField product if found otherwise use standard FileField
-try:
-    from Products.AttachmentField.AttachmentField import AttachmentField \
-        as ProxyFileField
-    from Products.AttachmentField.AttachmentWidget import AttachmentWidget \
-        as ProxyFileWidget
-except:
-    from Products.Archetypes.public import FileField as ProxyFileField
-    from Products.Archetypes.public import FileWidget as ProxyFileWidget
+from Products.Archetypes.public import FileWidget
+from plone.app.blob.field import FileField, BlobWrapper
+#import usefull to download blob file
+from webdav.common import rfc1123_date
+from plone.app.blob.download import handleIfModifiedSince, handleRequestRange
+from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
+from Products.Archetypes.utils import contentDispositionHeader
 
 INLINE_MIME_TYPES = ATFile.inlineMimetypes
 
@@ -83,17 +81,18 @@ FileInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
             i18n_domain='plonearticle',
             ),
         ),
-    ProxyFileField(
+    FileField(
         'attachedFile',
         attached_content=True,
         searchable=True,
-        widget=ProxyFileWidget(
+        widget=FileWidget(
             label='Attached file',
             label_msgid='label_attached_file',
             i18n_domain='plonearticle',
             ),
         ),
     ))
+
 
 class FileInnerContentProxy(BaseFileContentProxy):
     """Proxy implementing IFileContent. It means this proxy has a getFile
@@ -129,6 +128,12 @@ class FileInnerContentProxy(BaseFileContentProxy):
         #if not isinstance(data, File):
         #    return ''
 
+        filename = data.filename
+        content_type = data.getContentType()
+
+        if not isinstance(data, BlobWrapper):
+            return ''
+
         mime_type =  data.getContentType()
         if mime_type.startswith('text/'):
             return data
@@ -137,10 +142,21 @@ class FileInnerContentProxy(BaseFileContentProxy):
             content_dispo = 'inline'
         else:
             content_dispo = 'attachment'
-        RESPONSE.setHeader(
+        #RESPONSE.setHeader(
+        #    'Content-Disposition',
+        #    '%s; filename="%s"' % (content_dispo, data.filename or self.getId()))
+
+        #little bit tricky: if we are using reference field, fallback to
+        # defautl code, other case, we need to handle the blob file. The code in
+        # the else branch is taken directly from plone.app.blob.field.py
+        att_field = self.getField('attachedFile')
+        if not att_field.get_size(self) > 0:
+            RESPONSE.setHeader(
             'Content-Disposition',
-            '%s; filename="%s"' % (content_dispo, data.filename or self.getId()))
-        return data.index_html(REQUEST, RESPONSE)
+            '%s; filename="%s"' % (content_dispo, (filename or self.getId())))
+            return data.index_html(REQUEST, RESPONSE)
+        else:
+            return att_field.index_html(self, REQUEST, RESPONSE)
 
     def setAttachedFile(self, value, **kwargs):
         """

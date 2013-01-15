@@ -31,7 +31,7 @@ from Products.CMFCore import permissions as CCP
 from Products.CMFCore.utils import getToolByName
 
 # Archetypes imports
-from Products.Archetypes.public import ImageField, ImageWidget, ReferenceField, \
+from Products.Archetypes.public import ImageWidget, ReferenceField, \
     registerType, Schema, ComputedField, ComputedWidget
 
 # Products imports
@@ -43,12 +43,12 @@ except ImportError:
 
 from Products.ATContentTypes.interface import IImageContent
 
-from Products.PloneArticle import LOG
 from Products.PloneArticle.proxy import BaseFileContentProxy, \
     BaseInnerContentProxySchema
-from Products.PloneArticle.interfaces import IImageInnerContentProxy, IBaseInnerContentProxy
+from Products.PloneArticle.interfaces import IImageInnerContentProxy
 from Products.PloneArticle.config import PLONEARTICLE_TOOL, PROJECTNAME
 
+from plone.app.blob.field import ImageField, BlobWrapper
 
 # Defines schema
 ImageInnerContentProxySchema = BaseInnerContentProxySchema.copy() + Schema((
@@ -120,7 +120,11 @@ class ImageInnerContentProxy(BaseFileContentProxy):
         #if not isinstance(data, Image):
         #    return ''
 
-        return data.index_html(REQUEST, RESPONSE)
+        att_field = self.getField('attachedImage')
+        if not att_field.get_size(self) > 0:
+            return data.index_html(REQUEST, RESPONSE)
+        else:
+            return att_field.index_html(self, REQUEST, RESPONSE)
 
     security.declareProtected(CCP.View, 'tag')
     def tag(self, **kwargs):

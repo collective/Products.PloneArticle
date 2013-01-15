@@ -1,11 +1,11 @@
 PloneArticle Changes
 ====================
 
-4.2.1 (unreleased)
+4.3.0 (unreleased)
 ------------------
 
 - Fix access to images stored with blobstorage [kiorky, barbichu]
-
+- Added BLOB support [cekk]
 
 4.2.0 (2012-02-08)
 ------------------
