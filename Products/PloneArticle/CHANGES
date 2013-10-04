@@ -5,7 +5,13 @@ PloneArticle Changes
 ------------------
 
 - Fix access to images stored with blobstorage [kiorky, barbichu]
-- Removed old fixes for tabs that breaks creation objects in Plone 4 [cekk]
+- Changed old fixes for tabs that breaks creation objects in Plone 4 [cekk, keul]
+- Prevent the ``getVersionFromFS`` to blow up is we use a version like
+  1.2.3.dev0 [keul]
+- Fix widget uploadCompleted js method when editing an article attachments from edit form [cekk]
+- Removed old pa_jquery [andrea]
+- Fix browse server contents behaviours in edit mode [andrea]
+- Let ``IPloneArticle`` be also a ``ITextContent`` [keul]
 
 4.2.0 (2012-02-08)
 ------------------

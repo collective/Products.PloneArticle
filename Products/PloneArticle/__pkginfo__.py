@@ -26,7 +26,8 @@ modname = PRODUCT.__name__
 # i.e 4.0.0-beta4 CVS/SVN (UNRELEASED) => (4, 0, 0, 'beta2')
 ver_tup = version.split(' ')
 vers = ver_tup[0]
-major, minor, suffix =  vers.split('.')
+# 1.2.3.dev0 will be still valid --> 1.2.3
+major, minor, suffix =  vers.split('.')[:3]
 suffix = suffix.split('-')
 bugfix = suffix[0]
 release = len(suffix) > 1 and suffix[1] or ''

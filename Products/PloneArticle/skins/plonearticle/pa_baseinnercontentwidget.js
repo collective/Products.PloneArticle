@@ -154,7 +154,11 @@ Proxy.sendForm = function() {
 };
 
 Proxy.uploadCompleted = function() {
-	var container = Proxy.container;
+	if (Proxy.container === undefined) {
+    node = jQuery('.innerContentEditWidget' )[0];
+    Field_init(node);
+  }
+  var container = Proxy.container;
 	var doc = container.ownerDocument;
 	var iframe_doc = jQuery('#frmUploadWorker')[0].contentWindow.document;
 	jQuery('#new_file_waitingMessage').hide();

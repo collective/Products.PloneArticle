@@ -25,12 +25,13 @@ from zope.interface import Interface
 
 # Products imports
 from Products.ATContentTypes.interface import IATDocument
+from Products.ATContentTypes.interface import ITextContent
 
 # This is a marker interface. By having PloneArticle declare that it implements
 # IPloneArticle, we are asserting that it also supports IATDocument and
 # everything that interface declares
 
-class IPloneArticle(IATDocument):
+class IPloneArticle(IATDocument, ITextContent):
     """PloneArticle marker interface"""
     pass
 

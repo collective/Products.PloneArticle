@@ -258,6 +258,10 @@ Browser.setView = function(typeView) {
 };
 
 Browser.open = function(path, searchTerm, scope, replaceId, replacePath) {
+  if (Browser.field_name === null) {
+    node = jQuery('.innerContentEditWidget' )[0];
+    Browser.field_name = jQuery(jQuery('.pFieldname', node)[0]).val();
+  };
   var aUrl = 'pa_browser';
 	var data = {
         field_name:  Browser.field_name,
@@ -385,9 +389,25 @@ Browser.search = function(url, path, type, typeView, replaceId, replacePath) {
 };
 
 Browser.selectItem = function (UID) {
-	alert("Selected: " + UID);
-};
-
+        if (Browser.reference_script === null) {
+            Browser.reference_script = jQuery(jQuery('.pa_browser_reference_script', node)[0]).val();
+        };
+        aUrl = jQuery(jQuery('.article_url', node)[0]).val() + '/' + Browser.reference_script;
+        jQuery('.statusBar > div', Browser.window).hide().filter('#msg-loading').show();
+        if (Proxy.container === undefined) {
+            nodeType = jQuery(jQuery('.proxy_type', node)[0]).val();
+            Proxy.container = jQuery('#proxyContainer_' + nodeType)[0];
+        };
+        jQuery.post(aUrl, {uid: UID, field_name: Browser.field_name},
+           function(data) {
+               var container = jQuery(Proxy.container);
+               container.append(data);
+               TB_unlaunch();
+               jQuery(document).ready(TB_launch);
+               Proxy.refresh();
+            jQuery('.statusBar > div', Browser.window).hide().filter('#msg-done').show();
+           });
+    };
 
 Browser.batch = function() {
   jQuery('#plone-browser-body .listingBar a').click (

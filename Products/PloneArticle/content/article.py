@@ -180,6 +180,47 @@ class PloneArticle(ArticleMixin, ATDocument):
         Override BrowserDefaultMixin because default page stuff doesn't make
         sense for articles.
         """
-        return False       
-    
+        return False
+
+    security.declarePrivate('_processForm')
+    def _processForm(self, data=1, metadata=None, REQUEST=None, values=None):
+        """BaseObject._processForm override
+           this patch is done to make processForm possible by fieldset
+           when IMultiPageSchema is not implemented
+        """
+        request = REQUEST or self.REQUEST
+        if values:
+            form = values
+        else:
+            form = request.form
+
+        fieldset = form.get('fieldset', None)
+        if fieldset is None:
+            ArticleMixin._processForm(self, data=data, metadata=metadata,
+                                      REQUEST=REQUEST, values=values)
+        else:
+            schemata = self.Schemata()
+            fields = []
+
+            fields = schemata[fieldset.replace('#fieldset-', '')].fields()
+
+            for field in fields:
+
+                if not field.writeable(self):
+
+                    continue
+
+                widget = field.widget
+                result = widget.process_form(self, field, form,
+                                             empty_marker=_marker)
+                if result is _marker or result is None:
+                    continue
+
+                # Set things by calling the mutator
+                mutator = field.getMutator(self)
+                result[1]['field'] = field.__name__
+                mapply(mutator, result[0], **result[1])
+
+            self.reindexObject()
+
 registerType(PloneArticle, PROJECTNAME)
