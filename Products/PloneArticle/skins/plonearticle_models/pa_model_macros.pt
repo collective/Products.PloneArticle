@@ -481,10 +481,6 @@
                              multipage parent_folder/@@multipage_view;
                              is_multipage multipage/isMultipage;">
 
-      <div metal:use-macro="here/document_relateditems/macros/relatedItems">
-        Show related items if they exist
-      </div>
-
       <div tal:replace="structure provider:plone.belowcontentbody" />
 
     </metal:block>
