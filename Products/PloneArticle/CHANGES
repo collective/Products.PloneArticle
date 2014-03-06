@@ -4,6 +4,7 @@ PloneArticle Changes
 4.2.1 (unreleased)
 ------------------
 
+- Product is now z3c.autoinclude aware
 - Fix access to images stored with blobstorage [kiorky, barbichu]
 - Removed old fixes for tabs that breaks creation objects in Plone 4 [cekk]
 

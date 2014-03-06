@@ -43,5 +43,7 @@ setup(name='Products.PloneArticle',
       ],
       entry_points="""
       # -*- Entry points: -*-
+      [z3c.autoinclude.plugin]
+      target = plone
       """,
       )
