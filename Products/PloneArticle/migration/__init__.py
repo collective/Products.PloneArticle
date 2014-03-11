@@ -166,5 +166,6 @@ def registerMigrations():
     tool.registerUpgradePath('4.1.8', '4.1.9', null)
     tool.registerUpgradePath('4.1.9', '4.1.10', v4_1.final.stable419_4110)
     tool.registerUpgradePath('4.1.10', '4.2.0', null)
+    tool.registerUpgradePath('4.2.0', '4.2.1', null)
     return
 

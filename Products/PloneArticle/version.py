@@ -28,7 +28,7 @@ __docformat__ = 'restructuredtext'
 #          ALWAYS ADD A NEW VERSION AT THE END (APPEND)
 __VERSIONS = [
     '4.0.0-beta4',
-    ]
+]
 
 # __VERSIONS[idx] = version_string (i.e, '4.0.0beta4')
 # VERSIONS[version_string] = idx
