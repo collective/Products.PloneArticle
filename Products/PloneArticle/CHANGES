@@ -4,8 +4,14 @@ PloneArticle Changes
 4.2.1 (unreleased)
 ------------------
 
-- Fix access to images stored with blobstorage [kiorky, barbichu]
-- Removed old fixes for tabs that breaks creation objects in Plone 4 [cekk]
+* Change deprecated zope.container import to zope.lifecycleevent.
+  [thet]
+
+* Fix access to images stored with blobstorage.
+  [kiorky, barbichu]
+
+* Removed old fixes for tabs that breaks creation objects in Plone 4.
+  [cekk]
 
 4.2.0 (2012-02-08)
 ------------------
